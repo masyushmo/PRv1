@@ -16,7 +16,7 @@ FLAGS = -Wall -O3 -Wextra -Werror -flto -pipe
 
 NAME = doom-nukem
 
-SRC =	main.c
+SRC =	main.c print.c math.c raytrace.c parser.c
 
 INC = includes/doom.h
 

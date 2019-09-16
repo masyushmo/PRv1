@@ -12,36 +12,20 @@
 
 # include "../includes/rtv.h"
 
-t_vector    trace_ray(t_vector camera, t_vector d, int t_min, int t_max)
+int		init_sdl(t_sdl  *sdl)
 {
-    int min_dist = T_MAX;
-    int closest_obj = -1;
-    int n = -1;
-    while(++n < obj_num)
-    {
-
-    }
-
-}
-
-int         read_scene(t_rtv *rtv, char *filename)
-{
-    int     fd;
-    char    *line;
-
-    if ((fd = open(filename, O_RDONLY)) == -1)
-        return (error("BAD file"));
-    
-}
-
-t_vector    canvas_to_view(int x, int y)
-{
-    double  v_h;
-    double  v_w;
-
-    v_w = (tan(FOW_RAD) * 2 * D);
-    v_h = v_w * WIN_H / WIN_W;
-    return ((t_vector){x * v_w / WIN_W, y * v_h / WIN_H, D});
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+		return (error((char *)SDL_GetError()));
+	if (!(sdl->window = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_CENTERED, \
+		SDL_WINDOWPOS_CENTERED, WIN_W, \
+		WIN_H, SDL_WINDOW_SHOWN)))
+		return (error((char *)SDL_GetError()));
+	if (!(sdl->surface = SDL_GetWindowSurface(sdl->window)))
+		return (error((char *)SDL_GetError()));
+	SDL_ShowCursor(SDL_DISABLE);
+	SDL_SetWindowGrab(sdl->window, 1);
+	SDL_SetRelativeMouseMode(1);
+	return (1);
 }
 
 int    main(int argc, char **argv)
@@ -54,22 +38,6 @@ int    main(int argc, char **argv)
             return (1);
         if(!init_sdl(&rtv.sdl))
             return (1);
-        t_vector camera = {0, 0, 0};
-        int x = -WIN_W / 2;
-        int y = -WIN_H / 2;
-        while (y <= WIN_H / 2)
-        {
-            while (x <= WIN_W / 2)
-            {
-                t_vector    d;
-                t_vector    color;
-
-                d = canvas_to_view(x, y);
-                color = trace_ray(camera, d, T_MIN, T_MAX);
-
-            }
-        }
-        SDL_UpdateWindowSurface(rtv.sdl.window);
     }
     else
         return (usage());

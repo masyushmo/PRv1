@@ -31,23 +31,12 @@
 # define T_MIN 0
 # define T_MAX 2147483647 // int max
 
-typedef struct s_sdl    t_sdl;
-typedef struct s_rtv    t_rtv;
-typedef struct s_vector t_vector;
-typedef struct s_vector t_map;
-typedef struct s_sphere t_sphere;
-
-typedef union u_obj     t_obj;
-
-union   s_obj
-{
-    
-};
-
-struct  s_map
-{
-   int          obj_num;
-};
+typedef struct  s_sdl       t_sdl;
+typedef struct  s_rtv       t_rtv;
+typedef struct  s_vector    t_vector;
+typedef struct  s_vector    t_map;
+typedef struct  s_sphere    t_sphere;
+typedef union   u_obj       t_obj;
 
 struct  s_sdl
 {
@@ -62,6 +51,24 @@ struct  s_vector
     double      z;
 };
 
+struct  s_sphere
+{
+    t_vector    center;
+    int         radius;
+    t_vector    color;
+};
+
+union   u_obj
+{
+    t_sphere    sphere;
+};
+
+struct  s_map
+{
+    int         obj_num;
+    t_obj       obj; 
+};
+
 struct s_rtv
 {
     t_sdl       sdl;
@@ -73,21 +80,24 @@ struct s_rtv
 **main.c
 */
 int             main(int argc, char **argv);
-/*
-**sdl.c
-*/
-int				init_sdl(t_sdl  *sdl);
+int		        init_sdl(t_sdl  *sdl);
 /*
 **print.c
 */
 int			    error(char *message);
 int			    usage(void);
 /*
-**main.c
+**math.c
 */
-
+t_vector        canvas_to_view(int x, int y);
 /*
-**main.c
+**raytrace.c
 */
+t_vector        trace_ray(t_vector camera, t_vector d, t_rtv *rtv);
+void            trace_loop(t_rtv *rtv);
+/*
+**parser.c
+*/
+int             read_scene(t_rtv *rtv, char *filename);
 
 #endif
