@@ -30,11 +30,16 @@
 # define FOW_RAD FOW * PI / 180
 # define T_MIN 0
 # define T_MAX 2147483647 // int max
+# define OBJ_MAX 10
+
+# define RED "\033[0;31m"
+# define GREEN "\033[0;32*m"
+# define YELLOW "\033[0;33m"
 
 typedef struct  s_sdl       t_sdl;
 typedef struct  s_rtv       t_rtv;
 typedef struct  s_vector    t_vector;
-typedef struct  s_vector    t_map;
+typedef struct  s_map    t_map;
 typedef struct  s_sphere    t_sphere;
 typedef union   u_obj       t_obj;
 
@@ -53,9 +58,9 @@ struct  s_vector
 
 struct  s_sphere
 {
-    t_vector    center;
-    int         radius;
-    t_vector    color;
+    int         rad;
+    t_vector    o;
+    t_vector    col;
 };
 
 union   u_obj
@@ -66,13 +71,13 @@ union   u_obj
 struct  s_map
 {
     int         obj_num;
-    t_obj       obj; 
+    t_obj       obj[10]; 
 };
 
 struct s_rtv
 {
-    t_sdl       sdl;
     t_map       map;
+    t_sdl       sdl;
 };
 
 
@@ -84,7 +89,7 @@ int		        init_sdl(t_sdl  *sdl);
 /*
 **print.c
 */
-int			    error(char *message);
+int			    ft_error(char *message);
 int			    usage(void);
 /*
 **math.c

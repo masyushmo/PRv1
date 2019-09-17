@@ -12,7 +12,7 @@
 
 # include "../includes/rtv.h"
 
-int			error(char *message)
+int			ft_error(char *message)
 {
 	ft_putstr(message);
 	ft_putchar('\n');
