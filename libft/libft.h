@@ -97,6 +97,7 @@ float				percent(int start, int end, int current);
 size_t				ft_strlcat(char *dst,
 								const char *src, size_t dstsize);
 size_t				ft_strlen(const char *s);
+size_t				ft_num_size(int n);
 
 typedef struct		s_list
 {

@@ -1,2 +1,2 @@
 sphere {
-    radius = 
+    center = {10, -1, 3}

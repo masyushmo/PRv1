@@ -32,7 +32,7 @@ FT = ./libft/
 
 FT_LIB = $(addprefix $(FT), libft.a)
 
-LINKS := -L$(FT) -l ft -lm
+LINKS := -L$(FT) -l ft -lm -lSDL2
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Linux)

@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_num_size.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/10/25 20:01:11 by mmasyush          #+#    #+#             */
-/*   Updated: 2018/10/25 20:01:14 by mmasyush         ###   ########.fr       */
+/*   Created: 2018/11/04 11:13:33 by mmasyush          #+#    #+#             */
+/*   Updated: 2018/11/04 11:13:33 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen(const char *s)
+size_t	ft_num_size(int n)
 {
-	int			i;
+	size_t		i;
 
-	i = 0;
-	while (*s++ != '\0')
+	i = 1;
+	if (n < 0)
+		i++;
+	while (n /= 10)
 		i++;
 	return (i);
 }

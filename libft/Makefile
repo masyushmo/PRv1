@@ -12,7 +12,7 @@
 
 NAME = libft.a
 
-FLAGS = -O3 -Wall -Werror -Wextra -I. -c
+FLAGS = -O3 -Wall -Wextra -I. -c #-Werror
 
 SRCS = ft_bzero.c \
 					ft_memccpy.c \
@@ -80,6 +80,7 @@ SRCS = ft_bzero.c \
 					get_next_line.c \
 					percent.c \
 					line_pos.c \
+					ft_num_size.c \
 
 OUT = $(SRCS:.c=.o)
 

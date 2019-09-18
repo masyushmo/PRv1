@@ -12,22 +12,53 @@
 
 # include "../includes/rtv.h"
 
-int		get_int_value(char *line, int skip)
+int		count_digits(char *line, int skip)
 {
-	int num;
-	int num_len;
-	int i;
+	int		i;
+	int		digs;
 
 	i = skip;
-	num_len = 0;
-	while (ft_isdigit(line[i++]))
-		num_len++;
-	if (skip + num_len != (int)ft_strlen(line))
-		return (ft_error("\033[0;31mBAD numbers"));
+	digs = 0;
+	while (i < (int)ft_strlen(line))
+	{
+		if (ft_isdigit(line[i]))
+			digs++;
+		i++;
+	}
+	return (digs);
+}
+
+int		get_int_value(char *line, int skip)
+{
+	int 	num;
+	int		num_len;
+
 	num = ft_atoi(line + skip);
-	if (num > 0)
+	num_len = count_digits(line, skip);
+	if (num < 0)
+		num_len++;
+	if (skip + num_len == (int)ft_strlen(line) && num_len != 0)
 		return (num);
 	return (ft_error("\033[0;31mBAD numbers"));
+}
+
+t_vector		get_vector_value(char *line, int skip)
+{
+	t_vector	nums;
+	int			num_len;
+	int			i;
+
+	i = ft_strrchr(line, '1');
+	printf("%d\n", i);
+	nums.x = 0;
+	while (++i < (int)ft_strlen(line))
+	{
+		// if (line[i] == '{')
+			
+			// nums.x = get_int_value(line, i);
+	}
+	printf("%d\n", nums.x);
+	return (nums);
 }
 
 int		save_sphere(t_rtv *rtv, char *line)
@@ -38,6 +69,9 @@ int		save_sphere(t_rtv *rtv, char *line)
 	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
 		rtv->map.obj[rtv->map.obj_num].sphere.rad =
 			get_int_value(l, (int)ft_strlen("radius = "));
+	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
+		rtv->map.obj[rtv->map.obj_num].sphere.o =
+			get_vector_value(l, (int)ft_strlen("radius = "));
 	return (1);
 }
 

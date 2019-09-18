@@ -17,10 +17,11 @@
 # include <math.h>
 # include <fcntl.h>
 #ifdef __APPLE__
-# include "../frameworks/SDL2.framework/Headers/SDL.h"
-#else
-# include <SDL.h>
+#  include "../frameworks/SDL2.framework/Headers/SDL.h"
+# else
+#  include <SDL2/SDL.h>
 #endif
+#include <stdio.h>
 
 # define WIN_W 1280
 # define WIN_H 720
@@ -31,10 +32,11 @@
 # define T_MIN 0
 # define T_MAX 2147483647 // int max
 # define OBJ_MAX 10
+# define VEC_SPLT 6
 
-# define RED "\033[0;31m"
-# define GREEN "\033[0;32*m"
-# define YELLOW "\033[0;33m"
+# define R "\033[0;31m"
+# define G "\033[0;32*m"
+# define B "\033[0;34m"
 
 typedef struct  s_sdl       t_sdl;
 typedef struct  s_rtv       t_rtv;
@@ -51,9 +53,9 @@ struct  s_sdl
 
 struct  s_vector
 {
-    double      x;
-    double      y;
-    double      z;
+    int         x;
+    int         y;
+    int         z;
 };
 
 struct  s_sphere
