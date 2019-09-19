@@ -83,6 +83,8 @@ SRCS = ft_bzero.c \
 					ft_num_size.c \
 					ft_reg_fromto.c \
 					ft_sublen.c \
+					ft_brackets.c \
+					ft_count_digits.c
 
 OUT = $(SRCS:.c=.o)
 

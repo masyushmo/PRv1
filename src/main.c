@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/rtv.h"
+#include "../includes/rtv.h"
 
 int		init_sdl(t_sdl  *sdl)
 {

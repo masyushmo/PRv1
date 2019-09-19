@@ -39,7 +39,7 @@ ifeq ($(UNAME_S), Linux)
 		LINKS += -lSDL2
 endif
 
-SDL_pATH = ./framework
+SDL_PATH = ./framework
 
 INCLUDES := -I$(FT) -I$(INC_DIR)
 

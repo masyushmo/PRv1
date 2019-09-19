@@ -13,7 +13,7 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# define BUFF_SIZE 1
+# define BUFF_SIZE 1024
 # define MAX_FD 1024
 
 # include <string.h>
@@ -89,7 +89,9 @@ int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					ft_sqrt(int nb);
 int					get_next_line(const int fd, char **line);
 int					line_point(int start, int end, double p);
-int    				ft_sublen(const char *src, int from, int to);
+int					ft_sublen(const char *src, int from, int to);
+int         		ft_brackets(char *filename);
+int					ft_count_digits(char *line, int skip, int comp);
 double				ft_expon(double n, int pow);
 unsigned long long	ft_factorial(unsigned long long int nb);
 float				percent(int start, int end, int current);

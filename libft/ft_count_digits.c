@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   ft_count_digits.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/16 13:07:08 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/09/16 13:07:08 by mmasyush         ###   ########.fr       */
+/*   Created: 2019/09/19 17:29:21 by mmasyush          #+#    #+#             */
+/*   Updated: 2019/09/19 17:29:21 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
 
-int			ft_error(char *message)
+int ft_count_digits(char *line, int skip, int comp)
 {
-	ft_putstr(message);
-	ft_putchar('\n');
-	exit(1);
-}
+	int			i;
+	int			digs;
 
-int			usage(void)
-{
-	ft_putstr("usage: ./rtv {map}\n");
-	return (0);
+	i = skip;
+	digs = 0;
+	while (i < comp)
+	{
+		if (ft_isdigit(line[i]))
+			digs++;
+		i++;
+	}
+	return (digs);
 }

@@ -30,7 +30,7 @@
 # define PI 3.14159265
 # define FOW_RAD FOW * PI / 180
 # define T_MIN 0
-# define T_MAX 2147483647 // int max
+# define T_MAX 2147483647
 # define OBJ_MAX 10
 # define VEC_SPLT 6
 
