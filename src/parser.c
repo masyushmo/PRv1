@@ -67,7 +67,7 @@ int			save_sphere(t_rtv *rtv, char *line)
 	return (1);
 }
 
-int			check_line(t_rtv *rtv, char *line, int *b)
+int			check_obj(t_rtv *rtv, char *line, int *b)
 {
 	if (ft_strcmp("sphere {", line) == 0)
 	{
@@ -99,7 +99,7 @@ int			read_scene(t_rtv *rtv, char *filename)
 	bracket = 0;
 	while (get_next_line(fd, &line) == 1)
 	{
-		if (!check_line(rtv, line, &bracket))
+		if (!check_obj(rtv, line, &bracket))
 			return (0);
 		free(line);
 	}

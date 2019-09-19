@@ -12,11 +12,11 @@
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -O3 -flto -Ofast -pipe #-g -fsanitize=address #-Werror
+FLAGS = -Wall -Wextra -O3 -flto -Ofast -pipe -g -fsanitize=address #-Werror
 
 NAME = rtv
 
-SRC = main.c math.c parser.c print.c raytrace.c \
+SRC = main.c math.c parser.c print.c raytrace.c sdl.c\
 
 INC = includes/
 
