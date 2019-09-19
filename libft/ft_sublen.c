@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   ft_sublen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/16 13:07:08 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/09/16 13:07:08 by mmasyush         ###   ########.fr       */
+/*   Created: 2019/09/19 13:19:01 by mmasyush          #+#    #+#             */
+/*   Updated: 2019/09/19 13:19:01 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/rtv.h"
+#include "libft.h"
 
-int			ft_error(char *message)
+int    ft_sublen(const char *src, int from, int to)
 {
-	ft_putstr(message);
-	ft_putchar('\n');
-	exit(1);
-}
-
-int			usage(void)
-{
-	ft_putstr("usage: ./rtv {map}\n");
-	return (0);
+    char    *temp;
+    int     len;
+    
+    temp = ft_reg_fromto(src, from, to);
+    len = ft_strlen(temp);
+    return (len);
 }

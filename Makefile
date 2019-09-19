@@ -32,7 +32,7 @@ FT = ./libft/
 
 FT_LIB = $(addprefix $(FT), libft.a)
 
-LINKS := -L$(FT) -l ft -lm -lSDL2
+LINKS := -L$(FT) -l ft -lm
 UNAME_S := $(shell uname -s)
 
 ifeq ($(UNAME_S), Linux)
@@ -58,7 +58,7 @@ FRAMEWORKS += -F./frameworks \
 endif
 
 all: obj_dir $(FT_LIB) $(NAME)
-		@echo "\033[22;32mCOMPILATED! \033[22;35m^_^"
+		@echo "\033[22;32mCOMPILATED! \033[22;35mヽ(•‿•)ノ"
 obj_dir:
 		@mkdir -p $(OBJ_DIR)
 

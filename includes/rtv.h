@@ -37,6 +37,8 @@
 # define R "\033[0;31m"
 # define G "\033[0;32*m"
 # define B "\033[0;34m"
+# define BADNUM "\033[0;31mBAD numbers \033[22;35m(•̀o•́)"
+# define BADFILE "\033[0;31mBAD FILE  \033[22;35mლ(ಠ_ಠლ)"
 
 typedef struct  s_sdl       t_sdl;
 typedef struct  s_rtv       t_rtv;

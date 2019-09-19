@@ -81,6 +81,8 @@ SRCS = ft_bzero.c \
 					percent.c \
 					line_pos.c \
 					ft_num_size.c \
+					ft_reg_fromto.c \
+					ft_sublen.c \
 
 OUT = $(SRCS:.c=.o)
 

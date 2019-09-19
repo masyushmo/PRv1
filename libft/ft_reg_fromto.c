@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print.c                                            :+:      :+:    :+:   */
+/*   ft_reg_fromto.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/09/16 13:07:08 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/09/16 13:07:08 by mmasyush         ###   ########.fr       */
+/*   Created: 2019/09/19 12:42:02 by mmasyush          #+#    #+#             */
+/*   Updated: 2019/09/19 12:42:03 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../includes/rtv.h"
+#include "libft.h"
 
-int			ft_error(char *message)
+char    *ft_reg_fromto(const char *src, int from, int to)
 {
-	ft_putstr(message);
-	ft_putchar('\n');
-	exit(1);
-}
+    int     from_i;
+    int     to_i;
+    char    *dst;
 
-int			usage(void)
-{
-	ft_putstr("usage: ./rtv {map}\n");
-	return (0);
+    from_i = ft_strchr(src, from) - src + 1;
+    to_i = ft_strrchr(src, to) - src + 1;
+    dst = (char*)ft_memalloc(sizeof(char) * (to_i - from_i));
+    ft_strlcat(dst, src + from_i, to_i - from_i);
+    return (dst);
 }

@@ -69,6 +69,7 @@ char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strrev(char *str);
 char				*ft_strchan(char *s, char a, char b);
+char    			*ft_reg_fromto(const char *src, int from, int to);
 /*
 **exp
 */
@@ -88,6 +89,7 @@ int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					ft_sqrt(int nb);
 int					get_next_line(const int fd, char **line);
 int					line_point(int start, int end, double p);
+int    				ft_sublen(const char *src, int from, int to);
 double				ft_expon(double n, int pow);
 unsigned long long	ft_factorial(unsigned long long int nb);
 float				percent(int start, int end, int current);
