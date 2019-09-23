@@ -37,7 +37,7 @@
 # define VW	(1.732 * D)
 # define VH	(VW * WIN_H / WIN_W)
 
-# define BACKROUND (t_vector){0, 0, 0} 
+# define BACKROUND (t_vector){255, 255, 255} 
 # define R "\033[0;31m"
 # define G "\033[0;32*m"
 # define B "\033[0;34m"
@@ -54,7 +54,7 @@ typedef struct  s_sdl       t_sdl;
 typedef struct  s_rtv       t_rtv;
 typedef struct  s_map       t_map;
 typedef struct  s_sphere    t_sphere;
-typedef union   u_light     t_light;
+typedef struct  s_light     t_light;
 typedef union   u_obj       t_obj;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
 typedef	int     t_inter __attribute__((vector_size(sizeof(double) * 2)));
@@ -72,10 +72,10 @@ struct  s_sphere
     t_vector    col;
 };
 
-union   u_light
+struct   s_light
 {
-    char        *type;
-    double         i;
+    int         type;
+    double      i;
     t_vector    vect;
 };
 
@@ -88,8 +88,10 @@ union   u_obj
 struct  s_map
 {
     int         onum;
+    int         lnum;    
     int         olist[OBJ_MAX];
     t_obj       obj[OBJ_MAX];
+    t_light     light[OBJ_MAX];
 };
 
 struct s_rtv
@@ -101,7 +103,7 @@ struct s_rtv
 
 enum			e_obj
 {
-	SPHERE = 0, CONE = 1, CYLINDER = 2, PLANE = 3, LIGHT = 4
+	SPHERE = 0, CONE = 1, CYLINDER = 2, PLANE = 3
 };
 
 enum			e_light
@@ -122,6 +124,10 @@ int			    usage(void);
 **math.c
 */
 t_vector        canvas_to_view(int x, int y);
+t_vector	    vect_mult(t_vector a, double k);
+double          vect_dot(t_vector a, t_vector b);
+double          vect_len(t_vector a);
+t_vector	    vect_div(t_vector a, double k);
 /*
 **raytrace.c
 */

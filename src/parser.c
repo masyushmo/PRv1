@@ -86,46 +86,50 @@ int			save_light(t_map *map, char *line)
 	char		*l;
 
 	l = ft_strtrim(line);
-	if ((ft_strcmp("type = ambient", l) == 0) ||
-		(ft_strcmp("type = directional", l) == 0) ||
-		(ft_strcmp("type = point", l) == 0))
-		map->obj[map->onum].light.type = ft_strjoin(NULL, l + (int)ft_strlen("type = "));
+	if (ft_strcmp("type = ambient", l) == 0)
+		map->light[map->lnum].type = AMBIENT;
+	else if(ft_strcmp("type = directional", l) == 0)
+		map->light[map->lnum].type = DIRECT;
+	else if (ft_strcmp("type = point", l) == 0)
+		map->light[map->lnum].type = POINT;
 	if (ft_strncmp("intensity = ", l, ft_strlen("intensity = ")) == 0)
-		map->obj[map->onum].light.i = get_double(l, \
+		map->light[map->lnum].i = get_double(l, \
 			(int)ft_strlen("intensity = "), (int)ft_strlen(l));
-	printf("%f\n\n", map->obj[map->onum].light.i);
 	if ((ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0) ||
 		(ft_strncmp("position = ", l, ft_strlen("position = ")) == 0))
-		map->obj[map->onum].light.vect = get_vect(l);
+		map->light[map->lnum].vect = get_vect(l);
 	return (1);
 }
 
 int			check_obj(t_map *map, char *line)
 {
-	static int brack = 0;
+	static int obj_b = 0;
+	static int light_b = 0;
 
 	if (ft_strcmp("sphere {", line) == 0)
 	{
 		map->onum++;
 		map->olist[map->onum] = SPHERE;
-		brack = 1;
+		obj_b = 1;
 		return (1);
 	}
 	else if (ft_strcmp("light {", line) == 0)
 	{
-		map->onum++;
-		map->olist[map->onum] = LIGHT;
-		brack = 1;
+		map->lnum++;
+		light_b = 1;
 		return (1);
 	}
 	else if (ft_strcmp("}", line) == 0)
 	{
-		brack = 0;
+		if (obj_b)
+			obj_b = 0;
+		if (light_b)
+			light_b = 0;
 		return (1);
 	}
-	else if (brack == 1 && map->olist[map->onum] == SPHERE && save_sphere(map, line) && map->onum < OBJ_MAX)
+	else if (obj_b == 1 && map->olist[map->onum] == SPHERE && save_sphere(map, line) && map->onum < OBJ_MAX)
 		return (1);
-	else if (brack == 1 && map->olist[map->onum] == LIGHT && save_light(map, line) && map->onum < OBJ_MAX)
+	else if (light_b == 1 && save_light(map, line) && map->onum < OBJ_MAX)
 		return (1);
 	return (0);
 }
@@ -140,6 +144,7 @@ int			read_scene(t_map	*map, char	*filename)
 	if (!ft_brackets(filename))
 		return (ft_error(BADFILE));
 	map->onum = -1;
+	map->lnum = -1;
 	while (get_next_line(fd, &line) == 1)
 	{
 		if (!check_obj(map, line))
