@@ -39,7 +39,7 @@ static int	check(char *str, int *o, int *cl, int *pos)
         }
 		i += 1;
 	}
-    return (1);
+	return (1);
 }
 
 int         ft_brackets(char *filename)
@@ -56,9 +56,12 @@ int         ft_brackets(char *filename)
 	if ((fd = open(filename, O_RDONLY)) == -1)
 		return (0);
     while (get_next_line(fd, &line) == 1)
+	{
 		if (!check(line, &count_o, &count_cl, &pos))
 		    return (0);
+		free(line);
+	}
     if (count_cl == count_o)
-        return (1);
+    	return (1);
 	return (0);
 }

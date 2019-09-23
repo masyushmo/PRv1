@@ -18,11 +18,23 @@ int    main(int argc, char **argv)
 
     if (argc == 2)
     {
-        if(!read_scene(&rtv, argv[1]))
+        if(!read_scene(&rtv.map, argv[1]))
             return (1);
+       
         if(!init_sdl(&rtv.sdl))
             return (1);
-		loop(&rtv);
+      
+        // printf("%f\n", rtv.map.obj[0].sphere.col[1]);
+        // printf("%f\n", rtv.map.obj[0].sphere.col[2]);
+
+        // printf("%f\n", rtv.map.obj[1].sphere.col[0]);
+		// printf("%f\n", rtv.map.obj[1].sphere.col[1]);
+        // printf("%f\n", rtv.map.obj[1].sphere.col[2]);
+
+        // printf("%f\n", rtv.map.obj[2].sphere.col[0]);
+        // printf("%f\n", rtv.map.obj[2].sphere.col[1]);
+        // printf("%f\n", rtv.map.obj[2].sphere.col[2]);
+        loop(&rtv);
     }
     else
         return (usage());

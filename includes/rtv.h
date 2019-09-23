@@ -33,15 +33,18 @@
 # define OBJ_MAX 10
 # define VEC_SPLT 6
 
-# define D 1
+# define D 0.1
 # define VW	(1.732 * D)
 # define VH	(VW * WIN_H / WIN_W)
 
+# define BACKROUND (t_vector){0, 0, 0} 
 # define R "\033[0;31m"
 # define G "\033[0;32*m"
 # define B "\033[0;34m"
 # define BADNUM "\033[0;31mBAD numbers \033[22;35m(•̀o•́)"
 # define BADFILE "\033[0;31mBAD FILE  \033[22;35mლ(ಠ_ಠლ)"
+
+# define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 
 # define MIN(a,b)				(((a) < (b)) ? (a) : (b))
 # define MAX(a,b)				(((a) > (b)) ? (a) : (b))
@@ -49,23 +52,17 @@
 
 typedef struct  s_sdl       t_sdl;
 typedef struct  s_rtv       t_rtv;
-typedef struct  s_vector    t_vector;
-typedef struct  s_map    t_map;
+typedef struct  s_map       t_map;
 typedef struct  s_sphere    t_sphere;
-typedef struct  s_inter     t_inter;
+typedef union   u_light     t_light;
 typedef union   u_obj       t_obj;
+typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
+typedef	int     t_inter __attribute__((vector_size(sizeof(double) * 2)));
 
 struct  s_sdl
 {
     SDL_Window  *window;
     SDL_Surface *surface;
-};
-
-struct  s_vector
-{
-    int         x;
-    int         y;
-    int         z;
 };
 
 struct  s_sphere
@@ -75,29 +72,42 @@ struct  s_sphere
     t_vector    col;
 };
 
-struct  s_inter
+union   u_light
 {
-   int          t1;
-   int          t2;
+    char        *type;
+    double         i;
+    t_vector    vect;
 };
 
 union   u_obj
 {
     t_sphere    sphere;
+    t_light     light;
 };
 
 struct  s_map
 {
-    int         obj_num;
-    t_obj       obj[10]; 
+    int         onum;
+    int         olist[OBJ_MAX];
+    t_obj       obj[OBJ_MAX];
 };
 
 struct s_rtv
 {
+    int         quit;
     t_map       map;
     t_sdl       sdl;
 };
 
+enum			e_obj
+{
+	SPHERE = 0, CONE = 1, CYLINDER = 2, PLANE = 3, LIGHT = 4
+};
+
+enum			e_light
+{
+	AMBIENT = 0, POINT = 1, DIRECT = 2 
+};
 
 /*
 **main.c
@@ -117,15 +127,15 @@ t_vector        canvas_to_view(int x, int y);
 */
 t_vector        trace_ray(t_vector camera, t_vector d, t_rtv *rtv);
 void            trace_loop(t_rtv *rtv);
-int			loop(t_rtv *rtv);
+int			    loop(t_rtv *rtv);
 /*
 **parser.c
 */
-int             read_scene(t_rtv *rtv, char *filename);
-int			    check_obj(t_rtv *rtv, char *line, int *b);
+int             read_scene(t_map *map, char *filename);
+int			    check_obj(t_map *map, char *line);
 t_vector	    get_vector_value(char *line);
-int			    et_int_value(char *line, int skip, int comp);
-int			    save_sphere(t_rtv *rtv, char *line);
+int			    get_int_value(char *line, int skip, int comp);
+int			    save_sphere(t_map *map, char *line);
 /*
 **sdl.c
 */
