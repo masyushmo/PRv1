@@ -33,8 +33,14 @@ double			get_double(char *line, int skip, int comp)
 	int			num_len;
 
 	i1 = ft_atoi(line + skip);
-	i2 = ft_atoi(line + (ft_strchr(line, '.') - line + 1));
 	num_len = ft_count_digits(line, skip, comp) + 1;
+	if (ft_strchr(line, '.'))
+		i2 = ft_atoi(line + (ft_strchr(line, '.') - line + 1));
+	else
+	{
+		i2 = 0;
+		num_len = ft_count_digits(line, skip, comp);
+	}
 	if (i1 < 0)
 		num_len++;
 	if (skip + num_len == comp && num_len != 0)
