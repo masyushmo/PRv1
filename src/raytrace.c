@@ -19,7 +19,7 @@ double      compute_ligh(t_rtv *rtv, t_vector P, t_vector normal)
     double hz;
     t_vector light_d;
 
-    while (++i < rtv->map.lnum)
+    while (++i <= rtv->map.lnum)
     {
         if (rtv->map.light[i].type == AMBIENT) 
         {
@@ -31,10 +31,11 @@ double      compute_ligh(t_rtv *rtv, t_vector P, t_vector normal)
                 light_d = rtv->map.light[i].vect - P;
             else
                 light_d = rtv->map.light[i].vect;
-
             hz = vect_dot(normal, light_d);
+            
             if (hz > 0)
-                inte +=  rtv->map.light[i].i * hz / (vect_len(normal) * vect_len(light_d));
+                inte += (rtv->map.light[i].i * hz / \
+						(vect_len(light_d) * vect_len(normal)));
         }
     }
     return (inte);
@@ -44,17 +45,17 @@ t_inter     intersect_ray(t_vector camera, t_vector d, int n, t_rtv *rtv)
 {
     t_inter temp;
     t_vector c = rtv->map.obj[n].sphere.o;
-    int r = rtv->map.obj[n].sphere.rad;
+    double r = rtv->map.obj[n].sphere.rad;
     t_vector oc;
     oc[0] = camera[0] - c[0];
      oc[1] = camera[1] - c[1];
       oc[2] = camera[2] - c[2];
     
-    float k1 = ((d[0] * d[0]) + (d[1] * d[1]) + (d[2] * d[2]));
-    float k2 = 2 * ((oc[0] * d[0]) + (oc[1] * d[1]) + (oc[2] * d[2]));
-    float k3 = ((oc[0] * oc[0]) + (oc[1] * oc[1]) + (oc[2] * oc[2])) - r * r;
+    double k1 = ((d[0] * d[0]) + (d[1] * d[1]) + (d[2] * d[2]));
+    double k2 = 2 * ((oc[0] * d[0]) + (oc[1] * d[1]) + (oc[2] * d[2]));
+    double k3 = ((oc[0] * oc[0]) + (oc[1] * oc[1]) + (oc[2] * oc[2])) - r * r;
 
-    float dis = k2 * k2 - 4 * k1 * k3;
+    double dis = k2 * k2 - 4 * k1 * k3;
     if (dis < 0)
         return ((t_inter){T_MAX, T_MAX});
     temp[0] = (-k2 + sqrt(dis)) / (2 * k1);
@@ -65,7 +66,7 @@ t_inter     intersect_ray(t_vector camera, t_vector d, int n, t_rtv *rtv)
 t_vector    trace_ray(t_vector camera, t_vector d, t_rtv *rtv)
 {
     t_inter    inter;
-    int min_dist = T_MAX;
+    double min_dist = T_MAX + 1;
     int closest_obj = -1;
     int n = -1;
         
@@ -89,16 +90,8 @@ t_vector    trace_ray(t_vector camera, t_vector d, t_rtv *rtv)
     {
         t_vector p = camera + vect_mult(d, min_dist);
 	    t_vector normal = p - rtv->map.obj[closest_obj].sphere.o;
-	    normal = vect_div(d, min_dist);
-
-        printf("%f\n%f\n%f\n\n", rtv->map.obj[closest_obj].sphere.col[0], rtv->map.obj[closest_obj].sphere.col[1], rtv->map.obj[closest_obj].sphere.col[2]);
-        
-        rtv->map.obj[closest_obj].sphere.col = 
-            vect_mult(rtv->map.obj[closest_obj].sphere.col,  compute_ligh(rtv, p, normal));
-        
-        return ((t_vector){rtv->map.obj[closest_obj].sphere.col[0],
-        rtv->map.obj[closest_obj].sphere.col[1],
-        rtv->map.obj[closest_obj].sphere.col[2]});
+	    normal = vect_div(normal, vect_len(normal));
+        return (vect_mult(rtv->map.obj[closest_obj].sphere.col,  compute_ligh(rtv, p, normal)));
     }
 }
 
@@ -147,10 +140,10 @@ void            trace_loop(t_rtv *rtv)
 int			loop(t_rtv *rtv)
 {
     rtv->quit = 0;
+    trace_loop(rtv);
 	while (rtv->quit == 0)
 	{
         keyses(rtv);
-		trace_loop(rtv);
 	}
 	return (0);
 }

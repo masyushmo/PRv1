@@ -72,7 +72,7 @@ int			save_sphere(t_map *map, char *line)
 
 	l = ft_strtrim(line);
 	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
-		map->obj[map->onum].sphere.rad = get_int(l, \
+		map->obj[map->onum].sphere.rad = get_double(l, \
 			(int)ft_strlen("radius = "), (int)ft_strlen(l));
 	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
 		map->obj[map->onum].sphere.o = get_vect(l);

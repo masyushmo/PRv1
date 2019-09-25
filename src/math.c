@@ -39,5 +39,5 @@ double      vect_dot(t_vector a, t_vector b)
 
 double      vect_len(t_vector a)
 {
-	return (ft_sqrt(vect_dot(a, a)));
+	return (sqrt(vect_dot(a, a)));
 }
