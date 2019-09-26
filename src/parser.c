@@ -33,8 +33,14 @@ double			get_double(char *line, int skip, int comp)
 	int			num_len;
 
 	i1 = ft_atoi(line + skip);
-	i2 = ft_atoi(line + (ft_strchr(line, '.') - line + 1));
 	num_len = ft_count_digits(line, skip, comp) + 1;
+	if (ft_strchr(line, '.'))
+		i2 = ft_atoi(line + (ft_strchr(line, '.') - line + 1));
+	else
+	{
+		i2 = 0;
+		num_len = ft_count_digits(line, skip, comp);
+	}
 	if (i1 < 0)
 		num_len++;
 	if (skip + num_len == comp && num_len != 0)
@@ -71,8 +77,11 @@ int			save_sphere(t_map *map, char *line)
 	char		*l;
 
 	l = ft_strtrim(line);
+	if (ft_strncmp("specular = ", l, ft_strlen("specular = ")) == 0)
+		map->obj[map->onum].sphere.spec = get_int(l, \
+			(int)ft_strlen("specular = "), (int)ft_strlen(l));
 	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
-		map->obj[map->onum].sphere.rad = get_int(l, \
+		map->obj[map->onum].sphere.rad = get_double(l, \
 			(int)ft_strlen("radius = "), (int)ft_strlen(l));
 	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
 		map->obj[map->onum].sphere.o = get_vect(l);

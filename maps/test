@@ -2,16 +2,19 @@ sphere {
     center = {0, -1, 3}
     radius = 1
     color = {255, 0, 0}
+    specular = 500
 }
 sphere {
     center = {2, 0, 4}
-    radius = 1
+    radius = 1.1
     color = {0, 0, 255}
+    specular = 500
 }
 sphere {
     center = {-2, 0, 4}
     radius = 1
     color = {0, 255, 0}
+    specular = 10
 }
 light {
     type = ambient
@@ -26,4 +29,10 @@ light {
     type = directional
     intensity = 0.2
     direction = {1, 4, 4}
+}
+sphere {
+    color = {255, 255, 0}
+    center = {0, -5001, 0}
+    radius = 5000
+    specular = 1000
 }

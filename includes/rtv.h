@@ -29,7 +29,7 @@
 # define PI 3.14159265
 # define FOW_RAD FOW * PI / 180
 # define T_MIN 0
-# define T_MAX 2147483647
+# define T_MAX 9e9
 # define OBJ_MAX 10
 # define VEC_SPLT 6
 
@@ -57,7 +57,7 @@ typedef struct  s_sphere    t_sphere;
 typedef struct  s_light     t_light;
 typedef union   u_obj       t_obj;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
-typedef	int     t_inter __attribute__((vector_size(sizeof(double) * 2)));
+typedef	double  t_inter __attribute__((vector_size(sizeof(double) * 2)));
 
 struct  s_sdl
 {
@@ -67,7 +67,8 @@ struct  s_sdl
 
 struct  s_sphere
 {
-    int         rad;
+    int         spec;
+    double      rad;
     t_vector    o;
     t_vector    col;
 };
