@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rtv.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/09/16 13:12:26 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/14 17:45:20 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define VW	(1.732 * D)
 # define VH	(VW * WIN_H / WIN_W)
 
-# define BACKROUND (t_vector){255, 255, 255} 
+# define BACKROUND (t_vector){0, 0, 0} 
 # define R "\033[0;31m"
 # define G "\033[0;32*m"
 # define B "\033[0;34m"
@@ -54,7 +54,10 @@ typedef struct  s_sdl       t_sdl;
 typedef struct  s_rtv       t_rtv;
 typedef struct  s_map       t_map;
 typedef struct  s_sphere    t_sphere;
+typedef struct  s_cylinder  t_cylinder;
 typedef struct  s_light     t_light;
+typedef struct  s_calc      t_calc;
+typedef struct  s_raycheck  t_raycheck;
 typedef union   u_obj       t_obj;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
 typedef	double  t_inter __attribute__((vector_size(sizeof(double) * 2)));
@@ -73,6 +76,15 @@ struct  s_sphere
     t_vector    col;
 };
 
+struct  s_cylinder
+{
+    int         spec;
+    double      rad;
+    t_vector    o;
+    t_vector    dir;
+    t_vector    col;
+};
+
 struct   s_light
 {
     int         type;
@@ -80,9 +92,24 @@ struct   s_light
     t_vector    vect;
 };
 
+struct   s_raycheck
+{
+    double min_dist;
+    int close_obj;
+};
+
+struct   s_calc
+{
+    t_inter inter;
+    t_raycheck check;
+    t_vector dir;
+    t_vector camera;
+};
+
 union   u_obj
 {
     t_sphere    sphere;
+    t_cylinder  cylinder;
     t_light     light;
 };
 
@@ -100,6 +127,7 @@ struct s_rtv
     int         quit;
     t_map       map;
     t_sdl       sdl;
+    t_calc      calc;
 };
 
 enum			e_obj
@@ -132,7 +160,8 @@ t_vector	    vect_div(t_vector a, double k);
 /*
 **raytrace.c
 */
-t_vector        trace_ray(t_vector camera, t_vector d, t_rtv *rtv);
+t_raycheck      close_inter(t_vector start, t_vector dir, double max, double min, t_rtv *rtv);
+t_vector        trace_ray(t_rtv *rtv, t_calc *calc);
 void            trace_loop(t_rtv *rtv);
 int			    loop(t_rtv *rtv);
 /*

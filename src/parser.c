@@ -3,14 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/09/19 17:24:46 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/14 17:57:58 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
+
+void check_color(t_vector color)
+{
+	if ((color[0] < 0 || color[0] > 255) || (color[1] < 0 || color[1] > 255)
+		|| (color[2] < 0 || color[2] > 255))
+		ft_error(BADNUM);
+}
 
 int			get_int(char *line, int skip, int comp)
 {
@@ -87,6 +94,36 @@ int			save_sphere(t_map *map, char *line)
 		map->obj[map->onum].sphere.o = get_vect(l);
 	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].sphere.col = get_vect(l);
+	if ((map->obj[map->onum].sphere.spec > 1000 ||
+		map->obj[map->onum].sphere.spec < -1) ||
+		((int)map->obj[map->onum].sphere.rad < 0))
+			ft_error(BADNUM);
+	check_color(map->obj[map->onum].sphere.col);
+	return (1);
+}
+
+int			save_cyl(t_map *map, char *line)
+{
+	char		*l;
+
+	l = ft_strtrim(line);
+	if (ft_strncmp("specular = ", l, ft_strlen("specular = ")) == 0)
+		map->obj[map->onum].cylinder.spec = get_int(l, \
+			(int)ft_strlen("specular = "), (int)ft_strlen(l));
+	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
+		map->obj[map->onum].cylinder.rad = get_double(l, \
+			(int)ft_strlen("radius = "), (int)ft_strlen(l));
+	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
+		map->obj[map->onum].cylinder.o = get_vect(l);
+	if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
+		map->obj[map->onum].cylinder.dir = get_vect(l);
+	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
+		map->obj[map->onum].cylinder.col = get_vect(l);
+	if ((map->obj[map->onum].cylinder.spec > 1000 ||
+		map->obj[map->onum].cylinder.spec < -1) ||
+		((int)map->obj[map->onum].cylinder.rad < 0))
+			ft_error(BADNUM);
+	check_color(map->obj[map->onum].cylinder.col);
 	return (1);
 }
 
@@ -122,6 +159,13 @@ int			check_obj(t_map *map, char *line)
 		obj_b = 1;
 		return (1);
 	}
+	else if (ft_strcmp("cylinder {", line) == 0)
+	{
+		map->onum++;
+		map->olist[map->onum] = CYLINDER;
+		obj_b = 1;
+		return (1);
+	}
 	else if (ft_strcmp("light {", line) == 0)
 	{
 		map->lnum++;
@@ -137,6 +181,8 @@ int			check_obj(t_map *map, char *line)
 		return (1);
 	}
 	else if (obj_b == 1 && map->olist[map->onum] == SPHERE && save_sphere(map, line) && map->onum < OBJ_MAX)
+		return (1);
+	else if (obj_b == 1 && map->olist[map->onum] == CYLINDER && save_cyl(map, line) && map->onum < OBJ_MAX)
 		return (1);
 	else if (light_b == 1 && save_light(map, line) && map->onum < OBJ_MAX)
 		return (1);
