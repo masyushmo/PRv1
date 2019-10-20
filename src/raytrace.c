@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/14 18:20:23 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/20 16:20:44 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ t_inter     inter_sphere(t_vector camera, t_vector d, int n, t_rtv *rtv)
     t_vector oc;
     oc = camera - c;
     
-    double k1 = ((d[0] * d[0]) + (d[1] * d[1]) + (d[2] * d[2]));
-    double k2 = 2 * ((oc[0] * d[0]) + (oc[1] * d[1]) + (oc[2] * d[2]));
-    double k3 = ((oc[0] * oc[0]) + (oc[1] * oc[1]) + (oc[2] * oc[2])) - r * r;
+    double k1 = vect_dot(d, d);
+    double k2 = 2 * vect_dot(d, oc);
+    double k3 = vect_dot(oc, oc) - r * r;
 
     double dis = k2 * k2 - 4 * k1 * k3;
     if (dis < 0)
@@ -82,10 +82,32 @@ t_inter     inter_cyl(t_vector camera, t_vector d, int n, t_rtv *rtv)
     double r = rtv->map.obj[n].cylinder.rad;
     t_vector oc;
     oc = camera - c;
-    
-    double k1 = ((d[0] * d[0]) + (d[1] * d[1]) + (d[2] * d[2]));
-    double k2 = 2 * ((oc[0] * d[0]) + (oc[1] * d[1]) + (oc[2] * d[2]));
-    double k3 = ((oc[0] * oc[0]) + (oc[1] * oc[1]) + (oc[2] * oc[2])) - r * r;
+    double dd = vect_dot(d, rtv->map.obj[n].cylinder.dir);
+    double ocd = vect_dot(oc, rtv->map.obj[n].cylinder.dir);
+    double k1 = vect_dot(d, d) - dd * dd;
+    double k2 = 2 * vect_dot(d, oc) - dd * ocd;
+    double k3 = vect_dot(oc, oc) - ocd * ocd - r * r;
+
+    double dis = k2 * k2 - 4 * k1 * k3;
+    if (dis < 0)
+        return ((t_inter){T_MAX, T_MAX});
+    temp[0] = (-k2 + sqrt(dis)) / (2 * k1);
+    temp[1] = (-k2 - sqrt(dis)) / (2 * k1);
+    return (temp);
+}
+
+t_inter     inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
+{
+    t_inter temp;
+    t_vector c = rtv->map.obj[n].cylinder.o;
+    double r = rtv->map.obj[n].cylinder.rad;
+    t_vector oc;
+    oc = camera - c;
+    double dd = vect_dot(d, rtv->map.obj[n].cylinder.dir);
+    double ocd = vect_dot(oc, rtv->map.obj[n].cylinder.dir);
+    double k1 = vect_dot(d, d) - dd * dd;
+    double k2 = 2 * vect_dot(d, oc) - dd * ocd;
+    double k3 = vect_dot(oc, oc) - ocd * ocd - r * r;
 
     double dis = k2 * k2 - 4 * k1 * k3;
     if (dis < 0)
@@ -106,7 +128,12 @@ t_raycheck         close_inter(t_vector start, t_vector dir, double min, double 
         
     while(++n <= rtv->map.onum)
     {
-        inter = inter_sphere(start, dir, n, rtv);
+        if (rtv->map.olist[n] == SPHERE)
+            inter = inter_sphere(start, dir, n, rtv);
+        else if (rtv->map.olist[n] == CYLINDER)
+            inter = inter_cyl(start, dir, n, rtv);
+        else if (rtv->map.olist[n] == PLANE)
+            inter = inter_plane(start, dir, n, rtv);
         if ((inter[0] > min && inter[0] < max) && (inter[0] < temp.min_dist))
         {
             temp.min_dist = inter[0];
@@ -126,23 +153,37 @@ t_vector    trace_ray(t_rtv *rtv, t_calc *calc)
     calc->check = close_inter(calc->camera, calc->dir, T_MIN, T_MAX, rtv);
     if (calc->check.close_obj == -1)
         return(BACKROUND);
-    else if (calc->check.close_obj == CYLINDER)
-    {
-        double m;
-
-        m = vect_dot(calc->dir, rtv->map.obj[calc->check.close_obj].cylinder.dir) * calc->check.min_dist + vect_dot(calc->camera - rtv->map.obj[calc->check.close_obj].cylinder.o, rtv->map.obj[calc->check.close_obj].cylinder.dir);
-        t_vector p = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
-	    t_vector normal = p - rtv->map.obj[calc->check.close_obj].cylinder.o - vect_mult(rtv->map.obj[calc->check.close_obj].cylinder.dir, m);
-	    normal = vect_div(normal, vect_len(normal));
-        return (vect_mult(rtv->map.obj[calc->check.close_obj].sphere.col,  compute_ligh(rtv, p, normal, rtv->map.obj[calc->check.close_obj].sphere.spec, -calc->dir)));
-    }
-    else
+    else if (rtv->map.olist[calc->check.close_obj] == SPHERE)
     {
         t_vector p = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
 	    t_vector normal = p - rtv->map.obj[calc->check.close_obj].sphere.o;
 	    normal = vect_div(normal, vect_len(normal));
         return (vect_mult(rtv->map.obj[calc->check.close_obj].sphere.col,  compute_ligh(rtv, p, normal, rtv->map.obj[calc->check.close_obj].sphere.spec, -calc->dir)));
     }
+    else if (rtv->map.olist[calc->check.close_obj] == CYLINDER)
+    {
+        double	m;
+
+	    t_vector p = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
+	    m = vect_dot(calc->dir, rtv->map.obj[calc->check.close_obj].cylinder.dir) * \
+		calc->check.min_dist + vect_dot(calc->camera - rtv->map.obj[calc->check.close_obj].cylinder.o, rtv->map.obj[calc->check.close_obj].cylinder.dir);
+	    t_vector normal = p - rtv->map.obj[calc->check.close_obj].cylinder.o - vect_mult(rtv->map.obj[calc->check.close_obj].cylinder.dir, m);
+	    normal = vect_div(normal, vect_len(normal));
+        return (vect_mult(rtv->map.obj[calc->check.close_obj].cylinder.col,  compute_ligh(rtv, p, normal, rtv->map.obj[calc->check.close_obj].cylinder.spec, -calc->dir)));
+    }
+    else if (rtv->map.olist[calc->check.close_obj] == PLANE)
+    {
+        t_vector p = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
+        if (pc->sign > 0)
+		pc->normal = data->normal;
+	else
+		pc->normal = -data->normal;
+	    t_vector normal = p - rtv->map.obj[calc->check.close_obj].plane.o;
+	    normal = vect_div(normal, vect_len(normal));
+        return (vect_mult(rtv->map.obj[calc->check.close_obj].plane.col,  compute_ligh(rtv, p, normal, rtv->map.obj[calc->check.close_obj].plane.spec, -calc->dir)));
+    }
+    else 
+        return(BACKROUND);
 }
 
 int     rgb_color(t_vector color)
@@ -166,7 +207,6 @@ void	keyses(t_rtv *rtv)
 			rtv->quit = 1;
         if (event.type == SDL_KEYDOWN)
         {
-            printf("%d\n\n", rtv->map.obj[chosen].sphere.spec);
             if (event.key.keysym.sym == 1073741920)
                 rtv->map.obj[chosen].sphere.o[1] += 0.1;
             if (event.key.keysym.sym == 1073741914)

@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/14 17:45:20 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/20 16:14:31 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef struct  s_sphere    t_sphere;
 typedef struct  s_cylinder  t_cylinder;
 typedef struct  s_light     t_light;
 typedef struct  s_calc      t_calc;
+typedef struct  s_plane      t_plane;
 typedef struct  s_raycheck  t_raycheck;
 typedef union   u_obj       t_obj;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
@@ -73,6 +74,14 @@ struct  s_sphere
     int         spec;
     double      rad;
     t_vector    o;
+    t_vector    col;
+};
+
+struct  s_plane
+{
+    int         spec;
+    t_vector    o;
+    t_vector    norm;
     t_vector    col;
 };
 
@@ -110,6 +119,7 @@ union   u_obj
 {
     t_sphere    sphere;
     t_cylinder  cylinder;
+    t_plane     plane;
     t_light     light;
 };
 

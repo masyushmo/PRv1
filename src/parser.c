@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/14 17:57:58 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/20 16:15:48 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,27 @@ int			save_sphere(t_map *map, char *line)
 	return (1);
 }
 
+int			save_plane(t_map *map, char *line)
+{
+	char		*l;
+
+	l = ft_strtrim(line);
+	if (ft_strncmp("specular = ", l, ft_strlen("specular = ")) == 0)
+		map->obj[map->onum].plane.spec = get_int(l, \
+			(int)ft_strlen("specular = "), (int)ft_strlen(l));
+	if (ft_strncmp("normal = ", l, ft_strlen("normal = ")) == 0)
+		map->obj[map->onum].plane.norm = get_vect(l);
+	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
+		map->obj[map->onum].plane.o = get_vect(l);
+	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
+		map->obj[map->onum].plane.col = get_vect(l);
+	if (map->obj[map->onum].plane.spec > 1000 ||
+		map->obj[map->onum].plane.spec < -1)
+			ft_error(BADNUM);
+	check_color(map->obj[map->onum].plane.col);
+	return (1);
+}
+
 int			save_cyl(t_map *map, char *line)
 {
 	char		*l;
@@ -156,6 +177,13 @@ int			check_obj(t_map *map, char *line)
 	{
 		map->onum++;
 		map->olist[map->onum] = SPHERE;
+		obj_b = 1;
+		return (1);
+	}
+	else if (ft_strcmp("plane {", line) == 0)
+	{
+		map->onum++;
+		map->olist[map->onum] = PLANE;
 		obj_b = 1;
 		return (1);
 	}
