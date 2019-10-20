@@ -17,6 +17,18 @@ sphere {
     color = {5, 200, 0}
     specular = 200
 }
+plane {
+	normal = {0, 1, 0}
+	center = {0, -20, 0}
+	color = {0, 255, 0}
+	specular = 400
+}
+plane {
+	normal = {1, 0, 0}
+	center = {-20, 0, 0}
+	color = {0, 255, 255}
+	specular = 800
+}
 light {
     type = ambient
     intensity = 0.1
@@ -27,23 +39,7 @@ light {
     position = {-3, 2, 0}
 }
 light {
-    type = point
-    intensity = 0.3
-    position = {3, -2, 0}
-}
-light {
-    type = point
-    intensity = 0.9
-    position = {-3, 0, 15}
-}
-light {
     type = directional
     intensity = 0.1
     direction = {1, 4, 4}
-}
-plane {
-	normal = {0, 1, 0}
-	center = {0, 100, 0}
-	color = {0, 255, 0}
-	specular = 100
 }

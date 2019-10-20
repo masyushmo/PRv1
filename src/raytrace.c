@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/20 16:20:44 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/20 18:57:04 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,24 +97,15 @@ t_inter     inter_cyl(t_vector camera, t_vector d, int n, t_rtv *rtv)
 }
 
 t_inter     inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
-{
-    t_inter temp;
-    t_vector c = rtv->map.obj[n].cylinder.o;
-    double r = rtv->map.obj[n].cylinder.rad;
-    t_vector oc;
-    oc = camera - c;
-    double dd = vect_dot(d, rtv->map.obj[n].cylinder.dir);
-    double ocd = vect_dot(oc, rtv->map.obj[n].cylinder.dir);
-    double k1 = vect_dot(d, d) - dd * dd;
-    double k2 = 2 * vect_dot(d, oc) - dd * ocd;
-    double k3 = vect_dot(oc, oc) - ocd * ocd - r * r;
-
-    double dis = k2 * k2 - 4 * k1 * k3;
-    if (dis < 0)
-        return ((t_inter){T_MAX, T_MAX});
-    temp[0] = (-k2 + sqrt(dis)) / (2 * k1);
-    temp[1] = (-k2 - sqrt(dis)) / (2 * k1);
-    return (temp);
+{ 
+	double dd = vect_dot(d, rtv->map.obj[n].plane.norm);
+    if (dd < 0.000000001)
+		return ((t_inter){T_MAX + 1, T_MAX + 1});
+    else
+    {
+	    double cn = vect_dot(camera - rtv->map.obj[n].plane.o, rtv->map.obj[n].plane.norm);
+	    return ((t_inter){T_MAX + 1, -cn / dd});
+    }
 }
 
 t_raycheck         close_inter(t_vector start, t_vector dir, double min, double max, t_rtv *rtv)
@@ -173,12 +164,13 @@ t_vector    trace_ray(t_rtv *rtv, t_calc *calc)
     }
     else if (rtv->map.olist[calc->check.close_obj] == PLANE)
     {
+        t_vector normal;
+
         t_vector p = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
-        if (pc->sign > 0)
-		pc->normal = data->normal;
-	else
-		pc->normal = -data->normal;
-	    t_vector normal = p - rtv->map.obj[calc->check.close_obj].plane.o;
+        if (vect_dot(calc->dir, rtv->map.obj[calc->check.close_obj].plane.norm) > 0)
+		    normal = rtv->map.obj[calc->check.close_obj].plane.norm;
+	    else
+		    normal = -rtv->map.obj[calc->check.close_obj].plane.norm;
 	    normal = vect_div(normal, vect_len(normal));
         return (vect_mult(rtv->map.obj[calc->check.close_obj].plane.col,  compute_ligh(rtv, p, normal, rtv->map.obj[calc->check.close_obj].plane.spec, -calc->dir)));
     }

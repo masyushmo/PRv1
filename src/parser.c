@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/20 16:15:48 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/20 18:58:44 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,8 @@ int			check_obj(t_map *map, char *line)
 	else if (obj_b == 1 && map->olist[map->onum] == SPHERE && save_sphere(map, line) && map->onum < OBJ_MAX)
 		return (1);
 	else if (obj_b == 1 && map->olist[map->onum] == CYLINDER && save_cyl(map, line) && map->onum < OBJ_MAX)
+		return (1);
+	else if (obj_b == 1 && map->olist[map->onum] == PLANE && save_plane(map, line) && map->onum < OBJ_MAX)
 		return (1);
 	else if (light_b == 1 && save_light(map, line) && map->onum < OBJ_MAX)
 		return (1);
