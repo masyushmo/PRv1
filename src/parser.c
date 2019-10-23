@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:42:08 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 20:57:52 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,28 +28,24 @@ int			check_obj(t_map *map, char *line)
 	{
 		map->olist[map->onum] = SPHERE;
 		obj_b = 1;
-		map->onum++;
 		return (1);
 	}
 	else if (ft_strcmp("plane {", line) == 0)
 	{
 		map->olist[map->onum] = PLANE;
 		obj_b = 1;
-		map->onum++;
 		return (1);
 	}
 	else if (ft_strcmp("cylinder {", line) == 0)
 	{
 		map->olist[map->onum] = CYLINDER;
 		obj_b = 1;
-		map->onum++;
 		return (1);
 	}
 	else if (ft_strcmp("cone {", line) == 0)
 	{
 		map->olist[map->onum] = CONE;
 		obj_b = 1;
-		map->onum++;
 		return (1);
 	}
 	else if (ft_strcmp("light {", line) == 0)
@@ -64,6 +60,7 @@ int			check_obj(t_map *map, char *line)
 			obj_b = 0;
 		if (light_b)
 			light_b = 0;
+		map->onum++;
 		return (1);
 	}
 	else if (obj_b == 1 && map->olist[map->onum] == SPHERE && save_sphere(map, line) && map->onum < OBJ_MAX)

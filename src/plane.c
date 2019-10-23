@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:34 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 17:46:42 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 20:58:32 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,5 @@ int			save_plane(t_map *map, char *line)
 		map->obj[map->onum].plane.o = get_vect(l);
 	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].plane.col = get_vect(l);
-	if (map->obj[map->onum].plane.spec > 1000 ||
-		map->obj[map->onum].plane.spec < -1)
-			ft_error(BADNUM);
-	check_color(map->obj[map->onum].plane.col);
 	return (1);
 }

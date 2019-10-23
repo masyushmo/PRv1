@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 20:06:15 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:36:46 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 20:56:23 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void prepare_all(t_map *map)
     int i;
 
     i = -1;
-    printf("%d\n\n", map->olist[0]);
     while (++i < map->onum)
     {
         if (map->olist[i] == SPHERE)

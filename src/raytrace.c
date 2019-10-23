@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:46:31 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 21:04:59 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_raycheck         close_inter(t_vector start, t_vector dir, double min, double 
     temp.close_obj = -1;
     int n = -1;
         
-    while(++n < rtv->map.onum)
+    while(++n <= rtv->map.onum)
     {
         if (rtv->map.olist[n] == SPHERE)
             inter = inter_sphere(start, dir, n, rtv);

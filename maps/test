@@ -1,7 +1,21 @@
+cone {
+    angle = 60.0
+	center =  {1, 0, 5}
+	radius = 1.0
+	direction =  {1, 1, 0}
+	color = {150, 100, 200}
+	specular = 200
+}
+sphere {
+    center = {-2, 0, 5}
+    radius = 0.2
+    color = {0, 255, 0}
+    specular = 300
+}
 cylinder {
-    center = {0, 0, 5}
+    center = {1, 1, 5}
 	radius = 1
-	direction = {1, 0, 0}
+	direction = {1, -1, 1}
 	color = {255, 0, 0}
 	specular = -1
 }

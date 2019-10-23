@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:21:20 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 21:03:15 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 # define FOW_RAD FOW * PI / 180
 # define T_MIN 0
 # define T_MAX 9e9
-# define OBJ_MAX 10
+# define OBJ_MAX 50
 # define VEC_SPLT 6
 
 # define D 0.1

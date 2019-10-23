@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:05 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:46:49 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 20:57:45 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 t_inter     inter_cyl(t_vector camera, t_vector d, int n, t_rtv *rtv)
 {
-	printf("dgsgdsgsd");
     t_vector c = rtv->map.obj[n].cylinder.o;
     double r = rtv->map.obj[n].cylinder.rad;
     t_vector oc;
