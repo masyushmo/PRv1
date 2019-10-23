@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/20 16:14:31 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 20:21:20 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 #endif
 #include <stdio.h>
 
-# define WIN_W 1280
-# define WIN_H 720
+# define WIN_W 800
+# define WIN_H 600
 # define FOW 60
 # define PI 3.14159265
 # define FOW_RAD FOW * PI / 180
@@ -55,6 +55,7 @@ typedef struct  s_rtv       t_rtv;
 typedef struct  s_map       t_map;
 typedef struct  s_sphere    t_sphere;
 typedef struct  s_cylinder  t_cylinder;
+typedef struct  s_cone  t_cone;
 typedef struct  s_light     t_light;
 typedef struct  s_calc      t_calc;
 typedef struct  s_plane      t_plane;
@@ -94,6 +95,16 @@ struct  s_cylinder
     t_vector    col;
 };
 
+struct  s_cone
+{
+    int         spec;
+    double      rad;
+    double      ang;
+    t_vector    o;
+    t_vector    dir;
+    t_vector    col;
+};
+
 struct   s_light
 {
     int         type;
@@ -119,6 +130,7 @@ union   u_obj
 {
     t_sphere    sphere;
     t_cylinder  cylinder;
+    t_cone      cone;
     t_plane     plane;
     t_light     light;
 };
@@ -177,14 +189,57 @@ int			    loop(t_rtv *rtv);
 /*
 **parser.c
 */
+void            check_color(t_vector color);
 int             read_scene(t_map *map, char *filename);
 int			    check_obj(t_map *map, char *line);
-t_vector	    get_vector_value(char *line);
-int			    get_int_value(char *line, int skip, int comp);
-int			    save_sphere(t_map *map, char *line);
 /*
 **sdl.c
 */
-void	        put_pixel(int x, int y, Uint32 color, SDL_Surface *surr);
+Uint32	        get_pixel(SDL_Surface *texture, int x, int y);
+void	        set_pixel(int x, int y, Uint32 color, SDL_Surface *surr);
 int		        init_sdl(t_sdl  *sdl);
+/*
+**geters.c
+*/
+t_vector	    get_vect(char *line);
+double			get_double(char *line, int skip, int comp);
+int			    get_int(char *line, int skip, int comp);
+/*
+**sphere.c
+*/
+int			    save_sphere(t_map *map, char *line);
+t_vector	    sphere_norm(t_rtv *rtv, t_calc *calc);
+t_inter         inter_sphere(t_vector camera, t_vector d, int n, t_rtv *rtv);
+/*
+**cylinder.c
+*/
+int			    save_cyl(t_map *map, char *line);
+t_vector	    cyl_norm(t_rtv *rtv, t_calc *calc);
+t_inter         inter_cyl(t_vector camera, t_vector d, int n, t_rtv *rtv);
+/*
+**plane.c
+*/
+int			    save_plane(t_map *map, char *line);
+t_vector	    plane_norm(t_rtv *rtv, t_calc *calc);
+t_inter         inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv);
+/*
+**cone.c
+*/
+int			    save_cone(t_map *map, char *line);
+t_vector	    cone_norm(t_rtv *rtv, t_calc *calc);
+t_inter         inter_cone(t_vector camera, t_vector d, int n, t_rtv *rtv);
+/*
+**light.c
+*/
+int			    save_light(t_map *map, char *line);
+double          calc_light(t_rtv *rtv, t_vector P, t_vector normal, int spec, t_vector d);
+/*
+**events.c
+*/
+void	        keyses(t_rtv *rtv);
+/*
+**check_prep.c 
+*/
+void prepare_all(t_map *map);
+
 #endif

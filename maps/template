@@ -1,0 +1,45 @@
+cone {
+	center = {x, x, x}
+	radius = x
+	direction = {x, x, x}
+	color = {x, x, x}
+	specular = x
+     angle = x
+}
+sphere {
+     center = {x, x, x}
+     radius = x
+     color = {x, x, x}
+     specular = x
+}
+cylinder {
+     center = {x, x, x}
+	radius = x
+	direction = {x, x, x}
+	color = {x, x, x}
+	specular = x
+}
+plane {
+	normal = {x, x, x}
+	center = {x, x, x}
+	color = {x, x, x}
+	specular = x
+}
+light {
+     type = ambient
+     intensity = x
+}
+light {
+     type = point
+     intensity = x
+     position = {x, x, x}
+}
+light {
+     type = directional
+     intensity = x
+     direction = {x, x, x}
+}
+camera {
+     direction = {x, x, x}
+     center = {x, x, x}
+}

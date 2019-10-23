@@ -3,6 +3,7 @@
         "libft.h": "c",
         "sstream": "c",
         "locale": "c",
-        "string": "c"
+        "string": "c",
+        "rtv.h": "c"
     }
 }

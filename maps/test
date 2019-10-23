@@ -1,29 +1,18 @@
-sphere {
-    center = {0, -1, 3}
-    radius = 0.1
-    color = {255, 0, 0}
-    specular = -1
-}
-sphere {
-    center = {2, 0, 4}
-    radius = 1.1
-    color = {0, 0, 255}
-    specular = 500
-}
-sphere {
-    center = {-2, 0, 4}
-    radius = 1.5
-    color = {0, 255, 0}
-    specular = 300
+cylinder {
+    center = {0, 0, 5}
+	radius = 1
+	direction = {1, 0, 0}
+	color = {255, 0, 0}
+	specular = -1
 }
 light {
     type = ambient
-    intensity = 0.2
+    intensity = 0.5
 }
 light {
     type = point
     intensity = 0.6
-    position = {2, 1, 0}
+    position = {-3, 0, 0}
 }
 light {
     type = directional

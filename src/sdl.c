@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sdl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 18:41:52 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/09/19 18:41:52 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/23 15:20:58 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,18 @@ int		init_sdl(t_sdl  *sdl)
 	return (1);
 }
 
-void	put_pixel(int x, int y, Uint32 color, SDL_Surface *surr)
+void	set_pixel(int x, int y, Uint32 color, SDL_Surface *surr)
 {
 	Uint32	*pixels;
 
 	pixels = surr->pixels;
 	pixels[y * surr->w + x] = color;
+}
+
+Uint32	get_pixel(SDL_Surface *texture, int x, int y)
+{
+	Uint32 *ptr;
+
+	ptr = (Uint32 *)texture->pixels;
+	return (ptr[(y * texture->w) + x]);
 }
