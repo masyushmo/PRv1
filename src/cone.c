@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:15:11 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:57:32 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:34:59 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			save_cone(t_map *map, char *line)
 	if (ft_strncmp("angle = ", l, ft_strlen("angle = ")) == 0)
 		map->obj[map->onum].cone.ang = get_double(l, \
 			(int)ft_strlen("angle = "), (int)ft_strlen(l));
-	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
+	if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
 		map->obj[map->onum].cone.o = get_vect(l);
 	if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
 		map->obj[map->onum].cone.dir = get_vect(l);

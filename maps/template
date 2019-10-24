@@ -1,19 +1,19 @@
 cone {
-	center = {x, x, x}
-	radius = x
-	direction = {x, x, x}
-	color = {x, x, x}
-	specular = x
+     position = {x, x, x}
+     radius = x
+     direction = {x, x, x}
+     color = {x, x, x}
+     specular = x
      angle = x
 }
 sphere {
-     center = {x, x, x}
+     position = {x, x, x}
      radius = x
      color = {x, x, x}
      specular = x
 }
 cylinder {
-     center = {x, x, x}
+     position = {x, x, x}
 	radius = x
 	direction = {x, x, x}
 	color = {x, x, x}
@@ -21,7 +21,7 @@ cylinder {
 }
 plane {
 	normal = {x, x, x}
-	center = {x, x, x}
+	position = {x, x, x}
 	color = {x, x, x}
 	specular = x
 }
@@ -40,6 +40,6 @@ light {
      direction = {x, x, x}
 }
 camera {
+     position = {x, x, x}
      direction = {x, x, x}
-     center = {x, x, x}
 }

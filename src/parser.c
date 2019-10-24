@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 13:41:26 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 19:12:16 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,15 @@ void check_color(t_vector color)
 int			check_obj(t_map *map, char *line)
 {
 	static int obj_b = 0;
+	static int cam = 0;
 	static int light_b = 0;
 
-	if (ft_strcmp("sphere {", line) == 0)
+	if (ft_strcmp("camera {", line) == 0)
+	{
+		cam++;
+		return (1);
+	}
+	else if (ft_strcmp("sphere {", line) == 0)
 	{
 		map->olist[map->onum] = SPHERE;
 		obj_b = 1;
@@ -63,6 +69,8 @@ int			check_obj(t_map *map, char *line)
 		map->onum++;
 		return (1);
 	}
+	else if (cam == 1 && save_camera(map, line))
+		return (1);
 	else if (obj_b == 1 && map->olist[map->onum] == SPHERE && save_sphere(map, line) && map->onum < OBJ_MAX)
 		return (1);
 	else if (obj_b == 1 && map->olist[map->onum] == CYLINDER && save_cyl(map, line) && map->onum < OBJ_MAX)
@@ -73,6 +81,8 @@ int			check_obj(t_map *map, char *line)
 		return (1);
 	else if (light_b == 1 && save_light(map, line) && map->onum < OBJ_MAX)
 		return (1);
+	if (cam < 1 || cam > 1)
+		ft_error(BADCAM);
 	return (0);
 }
 

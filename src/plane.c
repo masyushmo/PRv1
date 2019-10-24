@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:34 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 15:03:31 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:35:48 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_inter     inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
     else
     {
 	    double c_norm = vect_dot(camera - rtv->map.obj[n].plane.o, rtv->map.obj[n].plane.norm);
-	    return ((t_inter){-c_norm / d_dir, -c_norm / d_dir});
+	    return ((t_inter){T_MAX + 1, -c_norm / d_dir});
     }
 }
 
@@ -29,11 +29,10 @@ t_vector	    plane_norm(t_rtv *rtv, t_calc *calc)
 	t_vector normal;
 
 	t_vector p = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
-	if (vect_dot(calc->dir, rtv->map.obj[calc->check.close_obj].plane.norm) > 0)
+	if (vect_dot(calc->dir, rtv->map.obj[calc->check.close_obj].plane.norm) < 0)
 		normal = rtv->map.obj[calc->check.close_obj].plane.norm;
 	else
 		normal = -rtv->map.obj[calc->check.close_obj].plane.norm;
-	normal = vect_div(normal, vect_len(normal));
 	return (vect_mult(rtv->map.obj[calc->check.close_obj].plane.col,  calc_light(rtv, p, normal, rtv->map.obj[calc->check.close_obj].plane.spec, -calc->dir)));
 }
 
@@ -47,7 +46,7 @@ int			save_plane(t_map *map, char *line)
 			(int)ft_strlen("specular = "), (int)ft_strlen(l));
 	if (ft_strncmp("normal = ", l, ft_strlen("normal = ")) == 0)
 		map->obj[map->onum].plane.norm = get_vect(l);
-	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
+	if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
 		map->obj[map->onum].plane.o = get_vect(l);
 	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].plane.col = get_vect(l);

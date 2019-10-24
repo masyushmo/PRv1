@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:17:06 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 15:03:46 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 19:24:48 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ double      calc_light(t_rtv *rtv, t_vector P, t_vector normal, int spec, t_vect
     double inte = 0.0;
     double hz;
     double zz;
-    t_raycheck rtmp;
+    t_raycheck shadow;
     t_vector light_d;
 
-    while (++i <= rtv->map.lnum)
+    while (++i < rtv->map.lnum)
     {
         if (rtv->map.light[i].type == AMBIENT) 
         {
@@ -34,8 +34,8 @@ double      calc_light(t_rtv *rtv, t_vector P, t_vector normal, int spec, t_vect
             else
                 light_d = rtv->map.light[i].vect;
         
-            rtmp = close_inter(P, light_d, 0.001, T_MAX, rtv);
-            if (rtmp.close_obj != -1)
+            shadow = close_inter(P, light_d, 0.001, T_MAX, rtv);
+            if (shadow.close_obj != -1)
                 continue;
             
             hz = vect_dot(normal, light_d);

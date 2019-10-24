@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 13:41:19 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 20:27:40 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@
 # define R "\033[0;31m"
 # define G "\033[0;32*m"
 # define B "\033[0;34m"
+# define BADNUM "\033[0;31mBAD numbers \033[22;35m(•̀o•́)"
 # define BADSPH "\033[0;31mBAD sphere data \033[22;35m(•̀o•́)"
 # define BADCONE "\033[0;31mBAD cone data \033[22;35m(•̀o•́)"
 # define BADCYL "\033[0;31mBAD cylinder data \033[22;35m(•̀o•́)"
 # define BADPLN "\033[0;31mBAD plane data \033[22;35m(•̀o•́)"
 # define BADLIG "\033[0;31mBAD light data \033[22;35m(•̀o•́)"
+# define BADCAM "\033[0;31mBAD camera data \033[22;35m(•̀o•́)"
 # define BADCOL "\033[0;31mBAD color \033[22;35m(•̀o•́)"
 # define BADFILE "\033[0;31mBAD FILE  \033[22;35mლ(ಠ_ಠლ)"
 
@@ -65,6 +67,7 @@ typedef struct  s_light     t_light;
 typedef struct  s_calc      t_calc;
 typedef struct  s_plane      t_plane;
 typedef struct  s_raycheck  t_raycheck;
+typedef struct  s_camera  t_camera;
 typedef union   u_obj       t_obj;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
 typedef	double  t_inter __attribute__((vector_size(sizeof(double) * 2)));
@@ -73,6 +76,16 @@ struct  s_sdl
 {
     SDL_Window  *window;
     SDL_Surface *surface;
+};
+
+struct  s_camera
+{
+    t_vector    pos;
+    t_vector    dir;
+    double      sinx;
+    double      siny;
+    double      cosx;
+    double      cosy;
 };
 
 struct  s_sphere
@@ -143,10 +156,11 @@ union   u_obj
 struct  s_map
 {
     int         onum;
-    int         lnum;    
-    int         olist[OBJ_MAX];
+    int         lnum;
+    int         olist[OBJ_MAX];    
     t_obj       obj[OBJ_MAX];
     t_light     light[OBJ_MAX];
+    t_camera    camera;
 };
 
 struct s_rtv
@@ -238,6 +252,10 @@ t_inter         inter_cone(t_vector camera, t_vector d, int n, t_rtv *rtv);
 */
 int			    save_light(t_map *map, char *line);
 double          calc_light(t_rtv *rtv, t_vector P, t_vector normal, int spec, t_vector d);
+/*
+**camera.c
+*/
+int			    save_camera(t_map *map, char *line);
 /*
 **events.c
 */

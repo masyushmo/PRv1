@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:28 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 15:25:10 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 19:56:16 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,31 @@ void	keyses(t_rtv *rtv)
                 rtv->map.obj[chosen].sphere.o[2] -= 0.1;
             else if (event.key.keysym.sym == 1073741917)
                 rtv->map.obj[chosen].sphere.o[2] += 0.1;
+                
             if (event.key.keysym.sym == 1073741910)
                 rtv->map.obj[chosen].sphere.spec -= 20;
             if (event.key.keysym.sym == 1073741911)
                 rtv->map.obj[chosen].sphere.spec += 20;
+                
             if (rtv->map.obj[chosen].sphere.spec > 1000)
                 rtv->map.obj[chosen].sphere.spec = 1000;
             if (rtv->map.obj[chosen].sphere.spec < 0)
                 rtv->map.obj[chosen].sphere.spec = 0;
-           
-            //     rtv->map.obj[0].sphere.o[1] += 1;
+
+            if (event.key.keysym.sym == SDLK_UP)
+                rtv->map.camera.pos[1] += 1;
+            if (event.key.keysym.sym == SDLK_DOWN)
+                rtv->map.camera.pos[1] -= 1;
+            if (event.key.keysym.sym == SDLK_LEFT)
+                rtv->map.camera.pos[0] -= 1;
+            if (event.key.keysym.sym == SDLK_RIGHT)
+                rtv->map.camera.pos[0] += 1;
+            if (event.key.keysym.sym == SDLK_SPACE && state[SDL_SCANCODE_TAB])
+                rtv->map.camera.pos[2] -= 1;
+            else if (event.key.keysym.sym == SDLK_SPACE)
+                rtv->map.camera.pos[2] += 1;
+
+                        //     rtv->map.obj[0].sphere.o[1] += 1;
             //     rtv->map.obj[0].sphere.o[2] += 1;
             // }
 

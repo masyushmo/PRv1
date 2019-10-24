@@ -6,7 +6,7 @@
 #    By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/17 17:51:05 by mmasyush          #+#    #+#              #
-#    Updated: 2019/10/23 20:07:47 by mmasyush         ###   ########.fr        #
+#    Updated: 2019/10/24 19:13:43 by mmasyush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FLAGS = -Wall -Wextra -O3 -flto -Ofast -pipe -g -fsanitize=address #-Werror
 NAME = rtv
 
 SRC = main.c math.c parser.c print.c raytrace.c sdl.c geters.c sphere.c \
-	cylinder.c plane.c cone.c light.c events.c check_prep.c \
+	cylinder.c plane.c cone.c light.c events.c check_prep.c camera.c \
 
 INC = includes/
 

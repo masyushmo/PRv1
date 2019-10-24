@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:05 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:57:45 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 17:35:48 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			save_cyl(t_map *map, char *line)
 	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
 		map->obj[map->onum].cylinder.rad = get_double(l, \
 			(int)ft_strlen("radius = "), (int)ft_strlen(l));
-	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
+	if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
 		map->obj[map->onum].cylinder.o = get_vect(l);
 	if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
 		map->obj[map->onum].cylinder.dir = get_vect(l);

@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 15:00:05 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 20:47:17 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ t_raycheck         close_inter(t_vector start, t_vector dir, double min, double 
     t_inter    inter;
     t_raycheck temp;
 
-    temp.min_dist = T_MAX + 1;
+    temp.min_dist = T_MAX;
     temp.close_obj = -1;
     int n = -1;
         
@@ -47,7 +47,7 @@ t_raycheck         close_inter(t_vector start, t_vector dir, double min, double 
 
 t_vector    trace_ray(t_rtv *rtv, t_calc *calc)
 {
-    calc->check = close_inter(calc->camera, calc->dir, T_MIN, T_MAX, rtv);
+    calc->check = close_inter(rtv->map.camera.pos, calc->dir, T_MIN, T_MAX, rtv);
     if (calc->check.close_obj == -1)
         return(BACKROUND);
     else if (rtv->map.olist[calc->check.close_obj] == SPHERE)
@@ -70,13 +70,30 @@ int     rgb_color(t_vector color)
     return(((int)color[0] << 16) + ((int)color[1] << 8) + (int)color[2]);
 } 
 
+t_vector	rotate_cam(t_vector d, t_camera *cam)
+{
+	double new_x;
+	double new_y;
+	double new_z;
+
+	new_x = d[0] * cam->cosy + d[2] * cam->siny;
+	new_z = -d[0] * cam->siny + d[2] * cam->cosy;
+	d[0] = new_x;
+	d[2] = new_z;
+	new_y = d[1] * cam->cosx + d[2] * cam->sinx;
+	new_z = -d[1] * cam->sinx + d[2] * cam->cosx;
+	d[1] = new_y;
+	d[2] = new_z;
+	return (d);
+}
+
 void            trace_loop(t_rtv *rtv)
 {
     int			x;
 	int			y;
     t_calc      calc;
 	t_vector    color;
-    calc.camera = (t_vector){0, 0, 0};
+    calc.dir = (t_vector){0, 0, 0};
 
 	y = -WIN_H / 2 - 1;
 	while (++y < WIN_H / 2)
@@ -85,6 +102,7 @@ void            trace_loop(t_rtv *rtv)
 		while (++x < WIN_W / 2)
 		{
 			calc.dir = canvas_to_view(x, y);
+            calc.dir = rotate_cam(calc.dir, &rtv->map.camera);
             color = trace_ray(rtv, &calc);
 			set_pixel(x + WIN_W / 2, y + WIN_H / 2, rgb_color(color), rtv->sdl.surface);
 		}
