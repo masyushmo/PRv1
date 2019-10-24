@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:17:06 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 17:59:36 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:03:46 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int			save_light(t_map *map, char *line)
 	l = ft_strtrim(line);
 	if (ft_strcmp("type = ambient", l) == 0)
 		map->light[map->lnum].type = AMBIENT;
-	else if(ft_strcmp("type = directional", l) == 0)
+	else if(ft_strcmp("type = direct", l) == 0)
 		map->light[map->lnum].type = DIRECT;
 	else if (ft_strcmp("type = point", l) == 0)
 		map->light[map->lnum].type = POINT;

@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:34 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:58:32 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:03:31 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 t_inter     inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
 { 
-		double d_dir = vect_dot(d, rtv->map.obj[n].plane.norm);
-		if (d_dir < 0)
-			return ((t_inter){T_MAX + 1, T_MAX + 1});
+	double d_dir = vect_dot(d, rtv->map.obj[n].plane.norm);
+	if (d_dir < 0)
+		return ((t_inter){T_MAX + 1, T_MAX + 1});
     else
     {
 	    double c_norm = vect_dot(camera - rtv->map.obj[n].plane.o, rtv->map.obj[n].plane.norm);
@@ -47,7 +47,6 @@ int			save_plane(t_map *map, char *line)
 			(int)ft_strlen("specular = "), (int)ft_strlen(l));
 	if (ft_strncmp("normal = ", l, ft_strlen("normal = ")) == 0)
 		map->obj[map->onum].plane.norm = get_vect(l);
-	map->obj[map->onum].plane.norm = vect_div(map->obj[map->onum].plane.norm, vect_len(map->obj[map->onum].plane.norm));
 	if (ft_strncmp("center = ", l, ft_strlen("center = ")) == 0)
 		map->obj[map->onum].plane.o = get_vect(l);
 	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)

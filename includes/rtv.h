@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 21:03:15 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 13:41:19 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,12 @@
 # define R "\033[0;31m"
 # define G "\033[0;32*m"
 # define B "\033[0;34m"
-# define BADNUM "\033[0;31mBAD numbers \033[22;35m(•̀o•́)"
+# define BADSPH "\033[0;31mBAD sphere data \033[22;35m(•̀o•́)"
+# define BADCONE "\033[0;31mBAD cone data \033[22;35m(•̀o•́)"
+# define BADCYL "\033[0;31mBAD cylinder data \033[22;35m(•̀o•́)"
+# define BADPLN "\033[0;31mBAD plane data \033[22;35m(•̀o•́)"
+# define BADLIG "\033[0;31mBAD light data \033[22;35m(•̀o•́)"
+# define BADCOL "\033[0;31mBAD color \033[22;35m(•̀o•́)"
 # define BADFILE "\033[0;31mBAD FILE  \033[22;35mლ(ಠ_ಠლ)"
 
 # define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)

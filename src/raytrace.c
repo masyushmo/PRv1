@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 21:04:59 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 15:00:05 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@ t_raycheck         close_inter(t_vector start, t_vector dir, double min, double 
     temp.close_obj = -1;
     int n = -1;
         
-    while(++n <= rtv->map.onum)
+    while(++n < rtv->map.onum - rtv->map.lnum)
     {
         if (rtv->map.olist[n] == SPHERE)
             inter = inter_sphere(start, dir, n, rtv);
+        else if (rtv->map.olist[n] == CONE)
+            inter = inter_cone(start, dir, n, rtv);
         else if (rtv->map.olist[n] == CYLINDER)
             inter = inter_cyl(start, dir, n, rtv);
         else if (rtv->map.olist[n] == PLANE)
             inter = inter_plane(start, dir, n, rtv);
-        else if (rtv->map.olist[n] == CONE)
-            inter = inter_cone(start, dir, n, rtv);
         if ((inter[0] > min && inter[0] < max) && (inter[0] < temp.min_dist))
         {
             temp.min_dist = inter[0];
@@ -52,12 +52,12 @@ t_vector    trace_ray(t_rtv *rtv, t_calc *calc)
         return(BACKROUND);
     else if (rtv->map.olist[calc->check.close_obj] == SPHERE)
         return (sphere_norm(rtv, calc));
+    else if (rtv->map.olist[calc->check.close_obj] == CONE)
+        return (cone_norm(rtv, calc));
     else if (rtv->map.olist[calc->check.close_obj] == CYLINDER)
         return (cyl_norm(rtv, calc));
     else if (rtv->map.olist[calc->check.close_obj] == PLANE)
         return (plane_norm(rtv, calc));
-    else if (rtv->map.olist[calc->check.close_obj] == CONE)
-        return (cone_norm(rtv, calc));
     else 
         return(BACKROUND);
 }

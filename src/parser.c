@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 20:57:52 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/24 13:41:26 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void check_color(t_vector color)
 {
 	if ((color[0] < 0 || color[0] > 255) || (color[1] < 0 || color[1] > 255)
 		|| (color[2] < 0 || color[2] > 255))
-		ft_error(BADNUM);
+		ft_error(BADCOL);
 }
 
 int			check_obj(t_map *map, char *line)
