@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   math.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:28:31 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/09/16 18:28:31 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_vector    canvas_to_view(int x, int y)
 {
-    double v_w;
-    double v_h;
+	double v_w;
+	double v_h;
 
-    v_w = VW;
-    v_h = VH;
-    return ((t_vector){(double)x * v_w / WIN_W, -(double)y * v_h / WIN_H, (double)D});
+	v_w = VW;
+	v_h = VH;
+	return ((t_vector){(double)x * v_w / WIN_W, -(double)y * v_h / WIN_H, (double)D});
 }
 
 t_vector	vect_mult(t_vector a, double k)

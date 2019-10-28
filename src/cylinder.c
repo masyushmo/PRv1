@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:05 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 17:35:48 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 t_inter     inter_cyl(t_vector camera, t_vector d, int n, t_rtv *rtv)
 {
-    t_vector c = rtv->map.obj[n].cylinder.o;
-    double r = rtv->map.obj[n].cylinder.rad;
-    t_vector oc;
-    oc = camera - c;
-    double d_dir = vect_dot(d, rtv->map.obj[n].cylinder.dir);
-    double oc_dir = vect_dot(oc, rtv->map.obj[n].cylinder.dir);
-    double k1 = vect_dot(d, d) - d_dir * d_dir;
-    double k2 = vect_dot(d, oc) - d_dir * oc_dir;
-    double k3 = vect_dot(oc, oc) - oc_dir * oc_dir - r * r;
+	t_vector c = rtv->map.obj[n].cylinder.o;
+	double r = rtv->map.obj[n].cylinder.rad;
+	t_vector oc;
+	oc = camera - c;
+	double d_dir = vect_dot(d, rtv->map.obj[n].cylinder.dir);
+	double oc_dir = vect_dot(oc, rtv->map.obj[n].cylinder.dir);
+	double k1 = vect_dot(d, d) - d_dir * d_dir;
+	double k2 = vect_dot(d, oc) - d_dir * oc_dir;
+	double k3 = vect_dot(oc, oc) - oc_dir * oc_dir - r * r;
 
-    double dis = k2 * k2 - k1 * k3;
-    if (dis < 0)
-        return ((t_inter){T_MAX, T_MAX});
-    return ((t_inter){(-k2 + sqrt(dis)) / (k1), (-k2 - sqrt(dis)) / (k1)});
+	double dis = k2 * k2 - k1 * k3;
+	if (dis < 0)
+		return ((t_inter){T_MAX, T_MAX});
+	return ((t_inter){(-k2 + sqrt(dis)) / (k1), (-k2 - sqrt(dis)) / (k1)});
 }
 
 t_vector	    cyl_norm(t_rtv *rtv, t_calc *calc)

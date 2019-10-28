@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:34 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 17:35:48 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:24:15 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ t_inter     inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
 { 
 	double d_dir = vect_dot(d, rtv->map.obj[n].plane.norm);
 	if (d_dir < 0)
-		return ((t_inter){T_MAX + 1, T_MAX + 1});
-    else
-    {
-	    double c_norm = vect_dot(camera - rtv->map.obj[n].plane.o, rtv->map.obj[n].plane.norm);
-	    return ((t_inter){T_MAX + 1, -c_norm / d_dir});
-    }
+	return ((t_inter){T_MAX + 1, T_MAX + 1});
+	else
+	{
+		double c_norm = vect_dot(camera - rtv->map.obj[n].plane.o, rtv->map.obj[n].plane.norm);
+		return ((t_inter){T_MAX + 1, -c_norm / d_dir});
+	}
 }
 
 t_vector	    plane_norm(t_rtv *rtv, t_calc *calc)

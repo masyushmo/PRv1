@@ -1,20 +1,8 @@
-cone {
+cylinder {
 	position = {1, 1, 5}
-	angle = 60.0
+	radius = 1
 	direction = {0, 1, 0}
 	color = {255, 0, 0}
-	specular = 100
-}
-plane {
-	normal = {0, 1, 0}
-	position = {0, 10, 0}
-	color = {0, 255, 0}
-	specular = 100
-}
-plane {
-	normal = {0, 1, 0}
-	position = {0, -10, 0}
-	color = {0, 255, 0}
 	specular = 100
 }
 light {

@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:17:06 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:14:42 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,45 +14,45 @@
 
 double      calc_light(t_rtv *rtv, t_vector P, t_vector normal, int spec, t_vector d)
 {
-    int i = -1;
-    double inte = 0.0;
-    double hz;
-    double zz;
-    t_raycheck shadow;
-    t_vector light_d;
+	int i = -1;
+	double inte = 0.0;
+	double hz;
+	double zz;
+	t_raycheck shadow;
+	t_vector light_d;
 
-    while (++i < rtv->map.lnum)
-    {
-        if (rtv->map.light[i].type == AMBIENT) 
-        {
-            inte += rtv->map.light[i].i;
-        }
-        else
-        {
-            if (rtv->map.light[i].type == POINT)
-                light_d = rtv->map.light[i].vect - P;
-            else
-                light_d = rtv->map.light[i].vect;
-        
-            shadow = close_inter(P, light_d, 0.001, T_MAX, rtv);
-            if (shadow.close_obj != -1)
-                continue;
-            
-            hz = vect_dot(normal, light_d);
-            if (hz > 0)
-                inte += (rtv->map.light[i].i * hz / \
+	while (++i < rtv->map.lnum)
+	{
+		if (rtv->map.light[i].type == AMBIENT) 
+		{
+			inte += rtv->map.light[i].i;
+		}
+		else
+		{
+			if (rtv->map.light[i].type == POINT)
+				light_d = rtv->map.light[i].vect - P;
+			else
+				light_d = rtv->map.light[i].vect;
+		
+			shadow = close_inter(P, light_d, 0.001, rtv);
+			if (shadow.close_obj != -1)
+				continue;
+			
+			hz = vect_dot(normal, light_d);
+			if (hz > 0)
+				inte += (rtv->map.light[i].i * hz / \
 						(vect_len(light_d) * vect_len(normal)));
-            if (spec != -1)
-            {
-                t_vector light_r  = vect_mult(vect_mult(normal, 2), (vect_dot(normal, light_d))) - light_d;
-                zz = vect_dot(light_r, d);
-                if (zz > 0)
-                    inte += (rtv->map.light[i].i * ft_expon((zz / (vect_len(light_r) * vect_len(d))), spec));
-            }
+			if (spec != -1)
+			{
+				t_vector light_r  = vect_mult(vect_mult(normal, 2), (vect_dot(normal, light_d))) - light_d;
+				zz = vect_dot(light_r, d);
+				if (zz > 0)
+					inte += (rtv->map.light[i].i * ft_expon((zz / (vect_len(light_r) * vect_len(d))), spec));
+			}
 
-        }
-    }
-    return (inte);
+		}
+	}
+	return (inte);
 }
 
 int			save_light(t_map *map, char *line)

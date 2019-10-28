@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:15:11 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 17:34:59 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,20 +14,20 @@
 
 t_inter     inter_cone(t_vector camera, t_vector d, int n, t_rtv *rtv)
 {
-    t_vector c = rtv->map.obj[n].cone.o;
-    t_vector oc;
-    oc = camera - c;
-    double d_dir = vect_dot(d, rtv->map.obj[n].cone.dir);
-    double oc_dir = vect_dot(oc, rtv->map.obj[n].cone.dir);
+	t_vector c = rtv->map.obj[n].cone.o;
+	t_vector oc;
+	oc = camera - c;
+	double d_dir = vect_dot(d, rtv->map.obj[n].cone.dir);
+	double oc_dir = vect_dot(oc, rtv->map.obj[n].cone.dir);
 	double value = (1 + rtv->map.obj[n].cone.ang * rtv->map.obj[n].cone.ang);
-    double k1 = vect_dot(d, d) - value * d_dir * d_dir;
-    double k2 = vect_dot(d, oc) - value * d_dir * oc_dir;
-    double k3 = vect_dot(oc, oc) - value * oc_dir * oc_dir;
+	double k1 = vect_dot(d, d) - value * d_dir * d_dir;
+	double k2 = vect_dot(d, oc) - value * d_dir * oc_dir;
+	double k3 = vect_dot(oc, oc) - value * oc_dir * oc_dir;
 
-    double dis = k2 * k2 - k1 * k3;
-    if (dis < 0)
-        return ((t_inter){T_MAX, T_MAX});
-    return ((t_inter){(-k2 + sqrt(dis)) / (k1), (-k2 - sqrt(dis)) / (k1)});
+	double dis = k2 * k2 - k1 * k3;
+	if (dis < 0)
+		return ((t_inter){T_MAX, T_MAX});
+	return ((t_inter){(-k2 + sqrt(dis)) / (k1), (-k2 - sqrt(dis)) / (k1)});
 }
 
 t_vector	    cone_norm(t_rtv *rtv, t_calc *c)

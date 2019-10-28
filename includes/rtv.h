@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:17:31 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:35:18 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,10 +206,11 @@ t_vector	    vect_div(t_vector a, double k);
 */
 void            dir_angls(t_camera *camera);
 t_vector	    rotate_cam(t_vector d, t_camera *cam);
+int             rgb_color(t_vector color);
 /*
 **raytrace.c
 */
-t_raycheck      close_inter(t_vector start, t_vector dir, double max, double min, t_rtv *rtv);
+t_raycheck      close_inter(t_vector start, t_vector dir, double min, t_rtv *rtv);
 t_vector        trace_ray(t_rtv *rtv, t_calc *calc);
 void            trace_loop(t_rtv *rtv);
 int			    loop(t_rtv *rtv);
