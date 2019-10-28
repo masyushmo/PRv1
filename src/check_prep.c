@@ -6,19 +6,11 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 20:06:15 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 20:42:01 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:18:20 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
-
-void    set_camera(t_camera *camera)
-{ 
-    camera->cosx = cos(camera->dir[0]);
-	camera->cosy = cos(camera->dir[1]);
-    camera->sinx = sin(camera->dir[0]);
-	camera->siny = sin(camera->dir[1]);
-}
 
 void prepare_all(t_map *map)
 {
@@ -63,5 +55,5 @@ void prepare_all(t_map *map)
                 vect_len(map->obj[i].plane.norm));
         }
     }
-    set_camera(&map->camera);
+   dir_angls(&map->camera);
 }

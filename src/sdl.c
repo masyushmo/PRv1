@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 18:41:52 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 15:20:58 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:16:43 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,22 @@ Uint32	get_pixel(SDL_Surface *texture, int x, int y)
 
 	ptr = (Uint32 *)texture->pixels;
 	return (ptr[(y * texture->w) + x]);
+}
+
+void	mouse_lock(t_rtv *rtv)
+{
+	if (!rtv->map.camera.rotate)
+	{
+		SDL_ShowCursor(SDL_DISABLE);
+		SDL_SetWindowGrab(rtv->sdl.window, 1);
+		SDL_SetRelativeMouseMode(1);
+		rtv->map.camera.rotate = 1;
+	}
+	else
+	{
+		SDL_ShowCursor(SDL_ENABLE);
+		SDL_SetWindowGrab(rtv->sdl.window, 0);
+		SDL_SetRelativeMouseMode(0);
+		rtv->map.camera.rotate = 0;
+	}
 }

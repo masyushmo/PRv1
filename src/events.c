@@ -6,65 +6,59 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:28 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 19:56:16 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:16:48 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
 
+int		new_dir(t_camera *camera)
+{
+	int				x;
+    int				y;
+
+    SDL_GetRelativeMouseState(&x, &y);
+    if (x == 0 && y == 0)
+        return (0);
+    camera->dir[0] += y * ROT_SPEED;
+    camera->dir[1] += x * ROT_SPEED;
+    dir_angls(camera);
+    return (1);
+}
+
+void		camera_move(t_camera *camera, SDL_Event	event, const Uint8 *state)
+{
+    if (event.key.keysym.sym == SDLK_w)
+        camera->pos[1] += MOVE_SPEED;
+    if (event.key.keysym.sym == SDLK_s)
+        camera->pos[1] -= MOVE_SPEED;
+    if (event.key.keysym.sym == SDLK_a)
+        camera->pos[0] -= MOVE_SPEED;
+    if (event.key.keysym.sym == SDLK_d)
+        camera->pos[0] += MOVE_SPEED;
+    if (event.key.keysym.sym == SDLK_SPACE && state[SDL_SCANCODE_TAB])
+        camera->pos[2] -= MOVE_SPEED;
+    else if (event.key.keysym.sym == SDLK_SPACE)
+        camera->pos[2] += MOVE_SPEED;
+}
+
 void	keyses(t_rtv *rtv)
 {
-    int chosen = 1;
-	SDL_Event	event;
+    SDL_Event	event;
     const Uint8 *state;
 
-	state = SDL_GetKeyboardState(NULL);
-	if (SDL_PollEvent(&event))
-	{
-		if (event.type == SDL_QUIT || EXIT)
-			rtv->quit = 1;
+    state = SDL_GetKeyboardState(NULL);
+    if (SDL_PollEvent(&event))
+    {
+        if (event.type == SDL_QUIT || EXIT)
+            rtv->quit = 1;
         if (event.type == SDL_KEYDOWN)
         {
-            if (event.key.keysym.sym == 1073741920)
-                rtv->map.obj[chosen].sphere.o[1] += 0.1;
-            if (event.key.keysym.sym == 1073741914)
-                rtv->map.obj[chosen].sphere.o[1] -= 0.1;
-            if (event.key.keysym.sym == 1073741916)
-                rtv->map.obj[chosen].sphere.o[0] -= 0.1;
-            if (event.key.keysym.sym == 1073741918)
-                rtv->map.obj[chosen].sphere.o[0] += 0.1;
-            if (event.key.keysym.sym == 1073741917 && state[SDL_SCANCODE_TAB])
-                rtv->map.obj[chosen].sphere.o[2] -= 0.1;
-            else if (event.key.keysym.sym == 1073741917)
-                rtv->map.obj[chosen].sphere.o[2] += 0.1;
-                
-            if (event.key.keysym.sym == 1073741910)
-                rtv->map.obj[chosen].sphere.spec -= 20;
-            if (event.key.keysym.sym == 1073741911)
-                rtv->map.obj[chosen].sphere.spec += 20;
-                
-            if (rtv->map.obj[chosen].sphere.spec > 1000)
-                rtv->map.obj[chosen].sphere.spec = 1000;
-            if (rtv->map.obj[chosen].sphere.spec < 0)
-                rtv->map.obj[chosen].sphere.spec = 0;
-
-            if (event.key.keysym.sym == SDLK_UP)
-                rtv->map.camera.pos[1] += 1;
-            if (event.key.keysym.sym == SDLK_DOWN)
-                rtv->map.camera.pos[1] -= 1;
-            if (event.key.keysym.sym == SDLK_LEFT)
-                rtv->map.camera.pos[0] -= 1;
-            if (event.key.keysym.sym == SDLK_RIGHT)
-                rtv->map.camera.pos[0] += 1;
-            if (event.key.keysym.sym == SDLK_SPACE && state[SDL_SCANCODE_TAB])
-                rtv->map.camera.pos[2] -= 1;
-            else if (event.key.keysym.sym == SDLK_SPACE)
-                rtv->map.camera.pos[2] += 1;
-
-                        //     rtv->map.obj[0].sphere.o[1] += 1;
-            //     rtv->map.obj[0].sphere.o[2] += 1;
-            // }
-
+            if (event.key.keysym.sym == SDLK_r)
+                mouse_lock(rtv);
         }
-	}
+        camera_move(&rtv->map.camera, event, state);
+    }
+    if (rtv->map.camera.rotate == 1)
+        new_dir(&rtv->map.camera);
 }

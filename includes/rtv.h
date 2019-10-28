@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/24 20:27:40 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 18:17:31 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define T_MAX 9e9
 # define OBJ_MAX 50
 # define VEC_SPLT 6
+# define MOVE_SPEED 0.2
+# define ROT_SPEED 0.2
 
 # define D 0.1
 # define VW	(1.732 * D)
@@ -86,6 +88,7 @@ struct  s_camera
     double      siny;
     double      cosx;
     double      cosy;
+    int         rotate;
 };
 
 struct  s_sphere
@@ -199,6 +202,11 @@ double          vect_dot(t_vector a, t_vector b);
 double          vect_len(t_vector a);
 t_vector	    vect_div(t_vector a, double k);
 /*
+**math_v2.c
+*/
+void            dir_angls(t_camera *camera);
+t_vector	    rotate_cam(t_vector d, t_camera *cam);
+/*
 **raytrace.c
 */
 t_raycheck      close_inter(t_vector start, t_vector dir, double max, double min, t_rtv *rtv);
@@ -217,6 +225,7 @@ int			    check_obj(t_map *map, char *line);
 Uint32	        get_pixel(SDL_Surface *texture, int x, int y);
 void	        set_pixel(int x, int y, Uint32 color, SDL_Surface *surr);
 int		        init_sdl(t_sdl  *sdl);
+void            mouse_lock(t_rtv *rtv);
 /*
 **geters.c
 */
@@ -260,6 +269,7 @@ int			    save_camera(t_map *map, char *line);
 **events.c
 */
 void	        keyses(t_rtv *rtv);
+int		        new_dir(t_camera *camera);
 /*
 **check_prep.c 
 */
