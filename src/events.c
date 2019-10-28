@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:28 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 19:20:54 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int		new_dir(t_camera *camera)
 {
-	int				x;
-	int				y;
+	int	x;
+	int	y;
 
 	SDL_GetRelativeMouseState(&x, &y);
 	if (x == 0 && y == 0)
@@ -26,7 +26,7 @@ int		new_dir(t_camera *camera)
 	return (1);
 }
 
-void		camera_move(t_camera *camera, SDL_Event	event, const Uint8 *state)
+void	camera_move(t_camera *camera, SDL_Event event, const Uint8 *state)
 {
 	if (event.key.keysym.sym == SDLK_w)
 		camera->pos[1] += MOVE_SPEED;

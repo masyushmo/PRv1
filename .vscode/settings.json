@@ -4,6 +4,7 @@
         "sstream": "c",
         "locale": "c",
         "string": "c",
-        "rtv.h": "c"
+        "rtv.h": "c",
+        "sdl.h": "c"
     }
 }

@@ -6,13 +6,13 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/19 18:41:52 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 19:46:52 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
 
-int		init_sdl(t_sdl  *sdl)
+int		init_sdl(t_sdl *sdl)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		return (ft_error((char *)SDL_GetError()));

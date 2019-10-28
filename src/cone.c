@@ -6,40 +6,50 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:15:11 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 19:14:12 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
 
-t_inter     inter_cone(t_vector camera, t_vector d, int n, t_rtv *rtv)
+t_roots		inter_cone(t_vector camera, t_vector d, int n, t_rtv *rtv)
 {
-	t_vector c = rtv->map.obj[n].cone.o;
-	t_vector oc;
-	oc = camera - c;
-	double d_dir = vect_dot(d, rtv->map.obj[n].cone.dir);
-	double oc_dir = vect_dot(oc, rtv->map.obj[n].cone.dir);
-	double value = (1 + rtv->map.obj[n].cone.ang * rtv->map.obj[n].cone.ang);
-	double k1 = vect_dot(d, d) - value * d_dir * d_dir;
-	double k2 = vect_dot(d, oc) - value * d_dir * oc_dir;
-	double k3 = vect_dot(oc, oc) - value * oc_dir * oc_dir;
+	t_inter	fo;
+	double	value;
+	double	d_dir;
+	double	oc_dir;
 
-	double dis = k2 * k2 - k1 * k3;
-	if (dis < 0)
-		return ((t_inter){T_MAX, T_MAX});
-	return ((t_inter){(-k2 + sqrt(dis)) / (k1), (-k2 - sqrt(dis)) / (k1)});
+	fo.oc = camera - rtv->map.obj[n].cone.o;
+	d_dir = vect_dot(d, rtv->map.obj[n].cone.dir);
+	oc_dir = vect_dot(fo.oc, rtv->map.obj[n].cone.dir);
+	value = (1 + rtv->map.obj[n].cone.ang * rtv->map.obj[n].cone.ang);
+	fo.k1 = vect_dot(d, d) - value * d_dir * d_dir;
+	fo.k2 = vect_dot(d, fo.oc) - value * d_dir * oc_dir;
+	fo.k3 = vect_dot(fo.oc, fo.oc) - value * oc_dir * oc_dir;
+	fo.dis = fo.k2 * fo.k2 - fo.k1 * fo.k3;
+	if (fo.dis < 0)
+		return ((t_roots){T_MAX, T_MAX});
+	return ((t_roots){(-fo.k2 + sqrt(fo.dis)) /
+		(fo.k1), (-fo.k2 - sqrt(fo.dis)) / (fo.k1)});
 }
 
-t_vector	    cone_norm(t_rtv *rtv, t_calc *c)
+t_vector	cone_norm(t_rtv *rtv, t_calc *c)
 {
 	double	m;
 
-	t_vector p = c->camera + vect_mult(c->dir, c->check.min_dist);
+	c->point = c->camera + vect_mult(c->dir, c->check.min_dist);
 	m = vect_dot(c->dir, rtv->map.obj[c->check.close_obj].cone.dir) * \
-	c->check.min_dist + vect_dot(c->camera - rtv->map.obj[c->check.close_obj].cone.o, rtv->map.obj[c->check.close_obj].cone.dir);
-	t_vector normal = p - rtv->map.obj[c->check.close_obj].cone.o - vect_mult(rtv->map.obj[c->check.close_obj].cone.dir, m * (1 + rtv->map.obj[c->check.close_obj].cone.ang * rtv->map.obj[c->check.close_obj].cone.ang));
-	normal = vect_div(normal, vect_len(normal));
-	return (vect_mult(rtv->map.obj[c->check.close_obj].cone.col,  calc_light(rtv, p, normal, rtv->map.obj[c->check.close_obj].cone.spec, -c->dir)));
+		c->check.min_dist + vect_dot(c->camera - \
+		rtv->map.obj[c->check.close_obj].cone.o, \
+		rtv->map.obj[c->check.close_obj].cone.dir);
+	c->normal = c->point - rtv->map.obj[c->check.close_obj].cone.o - \
+		vect_mult(rtv->map.obj[c->check.close_obj].cone.dir, m * \
+		(1 + rtv->map.obj[c->check.close_obj].cone.ang * \
+		rtv->map.obj[c->check.close_obj].cone.ang));
+	c->normal = vect_div(c->normal, vect_len(c->normal));
+	c->dir = -c->dir;
+	return (vect_mult(rtv->map.obj[c->check.close_obj].cone.col, \
+		calc_light(rtv, c, rtv->map.obj[c->check.close_obj].cone.spec)));
 }
 
 int			save_cone(t_map *map, char *line)
@@ -60,7 +70,6 @@ int			save_cone(t_map *map, char *line)
 		map->obj[map->onum].cone.o = get_vect(l);
 	if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
 		map->obj[map->onum].cone.dir = get_vect(l);
-	map->obj[map->onum].cone.dir = vect_div(map->obj[map->onum].cone.dir, vect_len(map->obj[map->onum].cone.dir));
 	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].cone.col = get_vect(l);
 	return (1);

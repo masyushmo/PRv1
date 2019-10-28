@@ -6,34 +6,39 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:34 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:24:15 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 19:45:37 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
 
-t_inter     inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
-{ 
-	double d_dir = vect_dot(d, rtv->map.obj[n].plane.norm);
+t_roots		inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
+{
+	double d_dir;
+	double c_norm;
+
+	d_dir = vect_dot(d, rtv->map.obj[n].plane.norm);
 	if (d_dir < 0)
-	return ((t_inter){T_MAX + 1, T_MAX + 1});
+		return ((t_roots){T_MAX + 1, T_MAX + 1});
 	else
 	{
-		double c_norm = vect_dot(camera - rtv->map.obj[n].plane.o, rtv->map.obj[n].plane.norm);
-		return ((t_inter){T_MAX + 1, -c_norm / d_dir});
+		c_norm = vect_dot(camera - rtv->map.obj[n].plane.o, \
+			rtv->map.obj[n].plane.norm);
+		return ((t_roots){T_MAX + 1, -c_norm / d_dir});
 	}
 }
 
-t_vector	    plane_norm(t_rtv *rtv, t_calc *calc)
+t_vector	plane_norm(t_rtv *rtv, t_calc *calc)
 {
-	t_vector normal;
-
-	t_vector p = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
-	if (vect_dot(calc->dir, rtv->map.obj[calc->check.close_obj].plane.norm) < 0)
-		normal = rtv->map.obj[calc->check.close_obj].plane.norm;
+	calc->point = calc->camera + vect_mult(calc->dir, calc->check.min_dist);
+	if (vect_dot(calc->dir, \
+		rtv->map.obj[calc->check.close_obj].plane.norm) < 0)
+		calc->normal = rtv->map.obj[calc->check.close_obj].plane.norm;
 	else
-		normal = -rtv->map.obj[calc->check.close_obj].plane.norm;
-	return (vect_mult(rtv->map.obj[calc->check.close_obj].plane.col,  calc_light(rtv, p, normal, rtv->map.obj[calc->check.close_obj].plane.spec, -calc->dir)));
+		calc->normal = -rtv->map.obj[calc->check.close_obj].plane.norm;
+	calc->dir = -calc->dir;
+	return (vect_mult(rtv->map.obj[calc->check.close_obj].plane.col,
+		calc_light(rtv, calc, rtv->map.obj[calc->check.close_obj].plane.spec)));
 }
 
 int			save_plane(t_map *map, char *line)

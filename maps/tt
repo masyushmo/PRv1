@@ -9,7 +9,7 @@ cone {
 sphere {
 	position = {-2, 1, 2}
 	radius = 0.5
-	color = {0, 0, 25}
+	color = {0, 100, 205}
 	specular = 200
 }
 cylinder {
@@ -17,13 +17,13 @@ cylinder {
 	radius = 0.5
 	direction = {1, 1, 0}
 	color = {0, 255, 0}
-	specular = 200
+	specular = -1
 }
 plane {
 	normal = {1, 1, 1}
 	position = {0, 0, 200}
-	color = {25, 25, 25}
-	specular = 200
+	color = {125, 25, 125}
+	specular = 1000
 }
 light {
 	type = ambient
@@ -31,7 +31,12 @@ light {
 }
 light {
 	type = point
-	intensity = 1.5
+	intensity = 0.3
+	position = {-1, 1, 2}
+}
+light {
+	type = point
+	intensity = 0.6
 	position = {0, -2, 1}
 }
 light {

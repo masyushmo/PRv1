@@ -6,22 +6,22 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:13:47 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:35:05 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 19:40:32 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
 
-int     rgb_color(t_vector color)
+int			rgb_color(t_vector color)
 {
 	color[0] = CLAMP(color[0], 0, 255);
 	color[1] = CLAMP(color[1], 0, 255);
 	color[2] = CLAMP(color[2], 0, 255);
-	return(((int)color[0] << 16) + ((int)color[1] << 8) + (int)color[2]);
-} 
+	return (((int)color[0] << 16) + ((int)color[1] << 8) + (int)color[2]);
+}
 
-void    dir_angls(t_camera *camera)
-{ 
+void		dir_angls(t_camera *camera)
+{
 	camera->cosx = cos(camera->dir[0] / 180 * M_PI);
 	camera->cosy = cos(camera->dir[1] / 180 * M_PI);
 	camera->sinx = sin(camera->dir[0] / 180 * M_PI);

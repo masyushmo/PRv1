@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:06:55 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 19:21:21 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int			get_int(char *line, int skip, int comp)
 	return (ft_error(BADNUM));
 }
 
-double			get_double(char *line, int skip, int comp)
+double		get_double(char *line, int skip, int comp)
 {
 	int			i1;
 	int			i2;

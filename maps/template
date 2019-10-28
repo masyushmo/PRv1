@@ -35,7 +35,7 @@ light {
      position = {x, x, x}
 }
 light {
-     type = directional
+     type = direct
      intensity = x
      direction = {x, x, x}
 }

@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/10/25 12:47:36 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/23 15:11:26 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/28 20:04:19 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char				**ft_strsplit(char const *s, char c);
 char				*ft_itoa(int n);
 char				*ft_strrev(char *str);
 char				*ft_strchan(char *s, char a, char b);
-char    			*ft_reg_fromto(const char *src, int from, int to);
+char				*ft_reg_fromto(const char *src, int from, int to);
 /*
 **exp
 */
@@ -90,7 +90,7 @@ int					ft_sqrt(int nb);
 int					get_next_line(const int fd, char **line);
 int					line_point(int start, int end, double p);
 int					ft_sublen(const char *src, int from, int to);
-int         		ft_brackets(char *filename);
+int					ft_brackets(char *filename);
 int					ft_count_digits(char *line, int skip, int comp);
 double				ft_expon(double n, int pow);
 unsigned long long	ft_factorial(unsigned long long int nb);
