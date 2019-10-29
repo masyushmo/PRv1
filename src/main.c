@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:56:55 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 15:33:41 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 19:10:39 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv)
 		if (!init_sdl(&rtv.sdl))
 			return (1);
 		loop(&rtv);
-		system("leaks rtv");
 	}
 	else
 		return (usage());

@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 17:59:46 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 19:11:07 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int		search_all(t_map *map, char *line)
 	static int obj_b = 0;
 	static int cam = 0;
 	static int light_b = 0;
-
+	
 	if (ft_strcmp("camera {", line) == 0)
 		cam++;
 	else if (ft_strcmp("light {", line) == 0)

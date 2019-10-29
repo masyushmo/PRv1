@@ -1,6 +1,5 @@
 cone {
      position = {x, x, x}
-     radius = x
      direction = {x, x, x}
      color = {x, x, x}
      specular = x

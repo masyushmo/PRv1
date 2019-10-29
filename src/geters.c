@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:06:55 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:21:21 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 19:04:21 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ t_vector	get_vect(char *line)
 	t_vector	nums;
 
 	if (ft_strchr(line, '{'))
-		nums[0] = get_int(line, ft_strchr(line, '{') -
+		nums[0] = get_double(line, ft_strchr(line, '{') -
 			line + 1, ft_strchr(line, ',') - line);
 	else
 		ft_error(BADNUM);
 	if (ft_strchr(line, ','))
-		nums[1] = get_int(line, ft_strchr(line, ',') -
+		nums[1] = get_double(line, ft_strchr(line, ',') -
 			line + 2, ft_strrchr(line, ',') - line);
 	else
 		ft_error(BADNUM);
 	if (ft_strrchr(line, ','))
-		nums[2] = get_int(line, ft_strrchr(line, ',') -
+		nums[2] = get_double(line, ft_strrchr(line, ',') -
 			line + 2, ft_strchr(line, '}') - line);
 	else
 		ft_error(BADNUM);

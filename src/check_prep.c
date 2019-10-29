@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 20:06:15 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 18:00:02 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 19:12:46 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	prepare_all(t_map *map)
 	}
 	i = -1;
 	while (++i < map->lnum)
-		if (map->light[i].i < 0 || map->olist[i] > 1)
+		if (map->light[i].i < 0 || map->light[i].i > 1)
 			ft_error(BADLIG);
 	dir_angls(&map->camera);
 }

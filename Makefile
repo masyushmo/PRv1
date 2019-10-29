@@ -6,13 +6,13 @@
 #    By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/17 17:51:05 by mmasyush          #+#    #+#              #
-#    Updated: 2019/10/28 18:18:52 by mmasyush         ###   ########.fr        #
+#    Updated: 2019/10/29 18:27:51 by mmasyush         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
 
-FLAGS = -Wall -Wextra -O3 -flto -Ofast -pipe #-g -fsanitize=address #-Werror
+FLAGS = -Wall -Wextra -Werror -O3 -flto -Ofast -pipe #-g -fsanitize=address
 
 NAME = rtv
 
