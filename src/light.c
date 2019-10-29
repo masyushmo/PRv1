@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:17:06 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:37:51 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 15:53:03 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,30 @@ double	calc_light(t_rtv *rtv, t_calc *calc, int spec)
 	return (inte);
 }
 
-int		save_light(t_map *map, char *line)
+int		save_light(t_map *map, char *line, int *close)
 {
 	char		*l;
 
 	l = ft_strtrim(line);
-	if (ft_strcmp("type = ambient", l) == 0)
+	if (ft_strcmp("}", line) == 0)
+	{
+		map->lnum++;
+		*close = 0;
+	}
+	else if (ft_strcmp("type = ambient", l) == 0)
 		map->light[map->lnum].type = AMBIENT;
 	else if (ft_strcmp("type = direct", l) == 0)
 		map->light[map->lnum].type = DIRECT;
 	else if (ft_strcmp("type = point", l) == 0)
 		map->light[map->lnum].type = POINT;
-	if (ft_strncmp("intensity = ", l, ft_strlen("intensity = ")) == 0)
+	else if (ft_strncmp("intensity = ", l, ft_strlen("intensity = ")) == 0)
 		map->light[map->lnum].i = get_double(l, \
 		(int)ft_strlen("intensity = "), (int)ft_strlen(l));
-	if ((ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0) ||
+	else if ((ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0) ||
 		(ft_strncmp("position = ", l, ft_strlen("position = ")) == 0))
 		map->light[map->lnum].vect = get_vect(l);
+	else
+		ft_error(BADLINE);
+	free(l);
 	return (1);
 }

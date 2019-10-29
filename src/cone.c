@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:15:11 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:14:12 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 17:28:46 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,10 @@ t_roots		inter_cone(t_vector camera, t_vector d, int n, t_rtv *rtv)
 	fo.k3 = vect_dot(fo.oc, fo.oc) - value * oc_dir * oc_dir;
 	fo.dis = fo.k2 * fo.k2 - fo.k1 * fo.k3;
 	if (fo.dis < 0)
-		return ((t_roots){T_MAX, T_MAX});
-	return ((t_roots){(-fo.k2 + sqrt(fo.dis)) /
-		(fo.k1), (-fo.k2 - sqrt(fo.dis)) / (fo.k1)});
+		return ((t_roots){T_MAX + 1, T_MAX + 1});
+	fo.dis = sqrt(fo.dis);
+	return ((t_roots){(-fo.k2 + fo.dis) /
+		(fo.k1), (-fo.k2 - fo.dis) / (fo.k1)});
 }
 
 t_vector	cone_norm(t_rtv *rtv, t_calc *c)
@@ -60,17 +61,17 @@ int			save_cone(t_map *map, char *line)
 	if (ft_strncmp("specular = ", l, ft_strlen("specular = ")) == 0)
 		map->obj[map->onum].cone.spec = get_int(l, \
 			(int)ft_strlen("specular = "), (int)ft_strlen(l));
-	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
-		map->obj[map->onum].cone.rad = get_double(l, \
-			(int)ft_strlen("radius = "), (int)ft_strlen(l));
-	if (ft_strncmp("angle = ", l, ft_strlen("angle = ")) == 0)
+	else if (ft_strncmp("angle = ", l, ft_strlen("angle = ")) == 0)
 		map->obj[map->onum].cone.ang = get_double(l, \
 			(int)ft_strlen("angle = "), (int)ft_strlen(l));
-	if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
+	else if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
 		map->obj[map->onum].cone.o = get_vect(l);
-	if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
+	else if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
 		map->obj[map->onum].cone.dir = get_vect(l);
-	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
+	else if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].cone.col = get_vect(l);
+	else
+		ft_error(BADLINE);
+	free(l);
 	return (1);
 }

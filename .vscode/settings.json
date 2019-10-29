@@ -5,6 +5,8 @@
         "locale": "c",
         "string": "c",
         "rtv.h": "c",
-        "sdl.h": "c"
+        "sdl.h": "c",
+        "complex": "c",
+        "cmath": "c"
     }
 }

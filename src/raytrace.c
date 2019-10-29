@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 20:01:13 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 16:00:43 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ t_raycheck	close_inter(t_vector start, t_vector dir, double min, t_rtv *rtv)
 	temp.min_dist = T_MAX;
 	temp.close_obj = -1;
 	n = -1;
-	while (++n < rtv->map.onum - rtv->map.lnum)
+	while (++n < rtv->map.onum)
 	{
 		roots = get_roots(start, dir, n, rtv);
 		if (roots[0] > min && roots[0] < temp.min_dist)

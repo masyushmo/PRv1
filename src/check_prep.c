@@ -6,54 +6,64 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 20:06:15 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 18:25:01 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 18:00:02 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
 
-void prepare_all(t_map *map)
+void	check_sphere(t_sphere *obj)
+{
+	if (obj->spec > 1000 || obj->spec < -1 || obj->rad < 0)
+		ft_error(BADSPH);
+	check_color(obj->col);
+}
+
+void	check_cone(t_cone *obj)
+{
+	if (obj->spec > 1000 || obj->spec < -1 || obj->ang < 0)
+		ft_error(BADCONE);
+	check_color(obj->col);
+	obj->dir = vect_div(obj->dir, vect_len(obj->dir));
+	obj->ang = tan(obj->ang / 2 * M_PI / 180);
+}
+
+void	check_cyl(t_cylinder *obj)
+{
+	if (obj->spec > 1000 || obj->spec < -1 || obj->rad < 0)
+		ft_error(BADCYL);
+	check_color(obj->col);
+	obj->dir = vect_div(obj->dir, vect_len(obj->dir));
+}
+
+void	check_plane(t_plane *obj)
+{
+	if (obj->spec > 1000 || obj->spec < -1)
+		ft_error(BADPLN);
+	check_color(obj->col);
+	obj->norm = vect_div(obj->norm, vect_len(obj->norm));
+}
+
+void	prepare_all(t_map *map)
 {
 	int i;
 
 	i = -1;
-	while (++i < map->onum - map->lnum)
+	printf("%d\n", map->lnum);
+	while (++i < map->onum)
 	{
 		if (map->olist[i] == SPHERE)
-		{
-			if (map->obj[i].sphere.spec > 1000 || \
-				map->obj[i].sphere.spec < -1 || map->obj[i].sphere.rad < 0)
-				ft_error(BADSPH);
-			check_color(map->obj[i].sphere.col);
-		}
+			check_sphere(&map->obj[i].sphere);
 		if (map->olist[i] == CONE)
-		{
-			if (map->obj[i].cone.spec > 1000 || map->obj[i].cone.spec < -1 || \
-				map->obj[i].cone.rad < 0 || map->obj[i].cone.ang < 0)
-				ft_error(BADCONE);
-			check_color(map->obj[i].cone.col);
-			map->obj[i].cone.dir = vect_div(map->obj[i].cone.dir, \
-				vect_len(map->obj[i].cone.dir));
-			map->obj[i].cone.ang = tan(map->obj[i].cone.ang / 2 * M_PI / 180);
-		}
+			check_cone(&map->obj[i].cone);
 		if (map->olist[i] == CYLINDER)
-		{
-			if (map->obj[i].cylinder.spec > 1000 ||
-				map->obj[i].cylinder.spec < -1 ||
-				map->obj[i].cylinder.rad < 0)
-				ft_error(BADCYL);
-			check_color(map->obj[i].cylinder.col);
-			map->obj[i].cylinder.dir = vect_div(map->obj[i].cylinder.dir, \
-				vect_len(map->obj[i].cylinder.dir));
-		}
+			check_cyl(&map->obj[i].cylinder);
 		if (map->olist[i] == PLANE)
-		{
-			if (map->obj[i].plane.spec > 1000 || map->obj[i].plane.spec < -1)
-				ft_error(BADPLN);
-			check_color(map->obj[i].plane.col);
-			map->obj[i].plane.norm = vect_div(map->obj[i].plane.norm, \
-				vect_len(map->obj[i].plane.norm));
-		}
+			check_plane(&map->obj[i].plane);
 	}
-   dir_angls(&map->camera);
+	i = -1;
+	while (++i < map->lnum)
+		if (map->light[i].i < 0 || map->olist[i] > 1)
+			ft_error(BADLIG);
+	dir_angls(&map->camera);
 }

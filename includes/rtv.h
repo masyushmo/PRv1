@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 20:23:29 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 17:58:09 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@
 # define BADLIG "\033[0;31mBAD light data \033[22;35m(•̀o•́)"
 # define BADCAM "\033[0;31mBAD camera data \033[22;35m(•̀o•́)"
 # define BADCOL "\033[0;31mBAD color \033[22;35m(•̀o•́)"
+# define BADLINE "\033[0;31mBAD line \033[22;35m(•̀o•́)"
+# define BADBRACK "\033[0;31mBAD brackets \033[22;35mლ(ಠ_ಠლ)"
 # define BADFILE "\033[0;31mBAD FILE  \033[22;35mლ(ಠ_ಠლ)"
 # define EXIT (event.type == SDL_KEYDOWN && event.key.keysym.sym == SDLK_ESCAPE)
 # define MIN(a,b)			(((a) < (b)) ? (a) : (b))
@@ -125,7 +127,6 @@ struct	s_inter
 struct	s_cone
 {
 	int			spec;
-	double		rad;
 	double		ang;
 	t_vector	o;
 	t_vector	dir;
@@ -231,7 +232,9 @@ int				loop(t_rtv *rtv);
 */
 void			check_color(t_vector color);
 int				read_scene(t_map *map, char *filename);
-int				check_obj(t_map *map, char *line);
+int				search_all(t_map *map, char *line);
+int				search_obj(t_map *map, char *line);
+int				save_obj(t_map *map, char *line, int *close);
 /*
 **sdl.c
 */
@@ -272,7 +275,7 @@ t_roots			inter_cone(t_vector camera, t_vector d, int n, t_rtv *rtv);
 /*
 **light.c
 */
-int				save_light(t_map *map, char *line);
+int				save_light(t_map *map, char *line, int *close);
 double			calc_light(t_rtv *rtv, t_calc *calc, int spec);
 /*
 **camera.c
@@ -287,5 +290,9 @@ int				new_dir(t_camera *camera);
 **check_prep.c
 */
 void			prepare_all(t_map *map);
+void			check_plane(t_plane *obj);
+void			check_cyl(t_cylinder *obj);
+void			check_sphere(t_sphere *obj);
+void			check_color(t_vector color);
 
 #endif

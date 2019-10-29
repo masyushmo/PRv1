@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:05 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:19:35 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 15:40:43 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,17 @@ int			save_cyl(t_map *map, char *line)
 	if (ft_strncmp("specular = ", l, ft_strlen("specular = ")) == 0)
 		map->obj[map->onum].cylinder.spec = get_int(l, \
 		(int)ft_strlen("specular = "), (int)ft_strlen(l));
-	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
+	else if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
 		map->obj[map->onum].cylinder.rad = get_double(l, \
 		(int)ft_strlen("radius = "), (int)ft_strlen(l));
-	if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
+	else if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
 		map->obj[map->onum].cylinder.o = get_vect(l);
-	if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
+	else if (ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0)
 		map->obj[map->onum].cylinder.dir = get_vect(l);
-	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
+	else if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].cylinder.col = get_vect(l);
+	else
+		ft_error(BADLINE);
+	free(l);
 	return (1);
 }

@@ -1,6 +1,5 @@
 cone {
 	position = {2, 0, 5}
-	radius = 0.5
 	direction = {1, 1, 0}
 	color = {255, 0, 0}
 	specular = 200
@@ -10,7 +9,7 @@ sphere {
 	position = {-2, 1, 2}
 	radius = 0.5
 	color = {0, 100, 205}
-	specular = 200
+	specular = 0
 }
 cylinder {
 	position = {0, 2, 6}
@@ -40,11 +39,11 @@ light {
 	position = {0, -2, 1}
 }
 light {
-	type = directional
+	type = direct
 	intensity = 0.2
 	direction = {1, 0, 1}
 }
 camera {
 	position = {0, 0, 0}
-	direction = {1, 0, 0}
+	direction = {0, 0, 0}
 }

@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:12:05 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:49:05 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 15:40:39 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,15 @@ int			save_sphere(t_map *map, char *line)
 	if (ft_strncmp("specular = ", l, ft_strlen("specular = ")) == 0)
 		map->obj[map->onum].sphere.spec = get_int(l, \
 			(int)ft_strlen("specular = "), (int)ft_strlen(l));
-	if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
+	else if (ft_strncmp("radius = ", l, ft_strlen("radius = ")) == 0)
 		map->obj[map->onum].sphere.rad = get_double(l, \
 			(int)ft_strlen("radius = "), (int)ft_strlen(l));
-	if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
+	else if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
 		map->obj[map->onum].sphere.o = get_vect(l);
-	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
+	else if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].sphere.col = get_vect(l);
+	else
+		ft_error(BADLINE);
+	free(l);
 	return (1);
 }

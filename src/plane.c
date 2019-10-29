@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:34 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:45:37 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/29 15:40:46 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,14 @@ int			save_plane(t_map *map, char *line)
 	if (ft_strncmp("specular = ", l, ft_strlen("specular = ")) == 0)
 		map->obj[map->onum].plane.spec = get_int(l, \
 			(int)ft_strlen("specular = "), (int)ft_strlen(l));
-	if (ft_strncmp("normal = ", l, ft_strlen("normal = ")) == 0)
+	else if (ft_strncmp("normal = ", l, ft_strlen("normal = ")) == 0)
 		map->obj[map->onum].plane.norm = get_vect(l);
-	if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
+	else if (ft_strncmp("position = ", l, ft_strlen("position = ")) == 0)
 		map->obj[map->onum].plane.o = get_vect(l);
-	if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
+	else if (ft_strncmp("color = ", l, ft_strlen("color = ")) == 0)
 		map->obj[map->onum].plane.col = get_vect(l);
+	else
+		ft_error(BADLINE);
+	free(l);
 	return (1);
 }
