@@ -6,11 +6,12 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 16:00:43 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:21:57 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
+#include <pthread.h>
 
 t_roots		get_roots(t_vector start, t_vector dir, int n, t_rtv *rtv)
 {
@@ -28,24 +29,24 @@ t_roots		get_roots(t_vector start, t_vector dir, int n, t_rtv *rtv)
 	return (temp);
 }
 
-t_raycheck	close_inter(t_vector start, t_vector dir, double min, t_rtv *rtv)
+t_raycheck	close_inter(t_vector start, t_vector dir, t_range *r, t_rtv *rtv)
 {
 	t_roots		roots;
 	t_raycheck	temp;
 	int			n;
 
-	temp.min_dist = T_MAX;
+	temp.min_dist = r->max;
 	temp.close_obj = -1;
 	n = -1;
 	while (++n < rtv->map.onum)
 	{
 		roots = get_roots(start, dir, n, rtv);
-		if (roots[0] > min && roots[0] < temp.min_dist)
+		if (roots[0] > r->min && roots[0] < temp.min_dist)
 		{
 			temp.min_dist = roots[0];
 			temp.close_obj = n;
 		}
-		if (roots[1] > min && roots[1] < temp.min_dist)
+		if (roots[1] > r->min && roots[1] < temp.min_dist)
 		{
 			temp.min_dist = roots[1];
 			temp.close_obj = n;
@@ -56,10 +57,12 @@ t_raycheck	close_inter(t_vector start, t_vector dir, double min, t_rtv *rtv)
 
 t_vector	trace_ray(t_rtv *rtv, t_calc *calc)
 {
-	calc->check = close_inter(rtv->map.camera.pos, calc->dir, T_MIN, rtv);
-	if (calc->check.close_obj == -1)
-		return (BACKROUND);
-	else if (rtv->map.olist[calc->check.close_obj] == SPHERE)
+	t_range range;
+
+	range.max = T_MAX;
+	range.min = T_MIN;
+	calc->check = close_inter(rtv->map.camera.pos, calc->dir, &range, rtv);
+	if (rtv->map.olist[calc->check.close_obj] == SPHERE)
 		return (sphere_norm(rtv, calc));
 	else if (rtv->map.olist[calc->check.close_obj] == CONE)
 		return (cone_norm(rtv, calc));
@@ -71,37 +74,49 @@ t_vector	trace_ray(t_rtv *rtv, t_calc *calc)
 		return (BACKROUND);
 }
 
-void		trace_loop(t_rtv *rtv)
+void		*trace_thread(void *data)
 {
 	int			x;
 	int			y;
+	t_tdata		*too;
 	t_calc		calc;
 	t_vector	color;
 
-	calc.camera = rtv->map.camera.pos;
-	y = -WIN_H / 2 - 1;
-	while (++y < WIN_H / 2)
+	too = (t_tdata*)data;
+	calc.camera = too->rtv.map.camera.pos;
+	y = WIN_H / THREAD * too->num;
+	while (y < (WIN_H / THREAD * (too->num + 1)))
 	{
-		x = -WIN_W / 2 - 1;
-		while (++x < WIN_W / 2)
+		x = -1;
+		while (++x < WIN_W)
 		{
-			calc.dir = canvas_to_view(x, y);
-			calc.dir = rotate_cam(calc.dir, &rtv->map.camera);
-			color = trace_ray(rtv, &calc);
-			set_pixel(x + WIN_W / 2, y + WIN_H / 2, \
-				rgb_color(color), rtv->sdl.surface);
+			calc.dir = canvas_to_view(x - WIN_W / 2, y - WIN_H / 2);
+			calc.dir = rotate_cam(calc.dir, &too->rtv.map.camera);
+			color = trace_ray(&too->rtv, &calc);
+			set_pixel(x, y, \
+				rgb_color(color), too->rtv.sdl.surface);
 		}
+		y++;
 	}
-	SDL_UpdateWindowSurface(rtv->sdl.window);
+	return (NULL);
 }
 
-int			loop(t_rtv *rtv)
+void		split(t_rtv *rtv)
 {
-	rtv->quit = 0;
-	while (rtv->quit == 0)
+	pthread_t	thread[WIN_H];
+	t_tdata		data[WIN_H];
+	int			i;
+
+	i = -1;
+	while (++i < THREAD)
 	{
-		keyses(rtv);
-		trace_loop(rtv);
+		data[i].num = i;
+		data[i].rtv = *rtv;
+		pthread_create(thread + i, NULL, \
+			trace_thread, data + i);
 	}
-	return (0);
+	i = -1;
+	while (++i < THREAD)
+		pthread_join(thread[i], NULL);
+	SDL_UpdateWindowSurface(rtv->sdl.window);
 }

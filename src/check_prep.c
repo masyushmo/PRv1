@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 20:06:15 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 19:12:46 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:15:21 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ void	prepare_all(t_map *map)
 	int i;
 
 	i = -1;
-	printf("%d\n", map->lnum);
 	while (++i < map->onum)
 	{
 		if (map->olist[i] == SPHERE)
@@ -65,5 +64,7 @@ void	prepare_all(t_map *map)
 	while (++i < map->lnum)
 		if (map->light[i].i < 0 || map->light[i].i > 1)
 			ft_error(BADLIG);
+	if (map->onum <= 0 || map->lnum <= 0)
+		ft_error(BADFILE);
 	dir_angls(&map->camera);
 }

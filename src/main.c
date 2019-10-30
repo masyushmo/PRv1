@@ -6,11 +6,22 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:56:55 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 19:10:39 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:22:22 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/rtv.h"
+
+int	loop(t_rtv *rtv)
+{
+	rtv->quit = 0;
+	while (rtv->quit == 0)
+	{
+		keyses(rtv);
+		split(rtv);
+	}
+	return (0);
+}
 
 int	main(int argc, char **argv)
 {

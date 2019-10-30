@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 17:58:09 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:21:03 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,19 @@
 
 # include "../libft/libft.h"
 # include <math.h>
-# include <fcntl.h>
 # ifdef __APPLE__
 #  include "../frameworks/SDL2.framework/Headers/SDL.h"
 # else
 #  include <SDL2/SDL.h>
 # endif
-# include <stdio.h>
 
+# define THREAD 8
 # define WIN_W 800
 # define WIN_H 600
 # define FOW 60
 # define PI 3.14159265
 # define FOW_RAD FOW * PI / 180
-# define T_MIN 0
+# define T_MIN 0.1
 # define T_MAX 9e9
 # define OBJ_MAX 50
 # define VEC_SPLT 6
@@ -69,6 +68,7 @@ typedef struct s_plane		t_plane;
 typedef struct s_raycheck	t_raycheck;
 typedef struct s_camera		t_camera;
 typedef struct s_inter		t_inter;
+typedef struct s_range		t_range;
 typedef union u_obj			t_obj;
 typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
 typedef	double	t_roots __attribute__((vector_size(sizeof(double) * 2)));
@@ -146,6 +146,12 @@ struct	s_raycheck
 	int			close_obj;
 };
 
+struct	s_range
+{
+	double		max;
+	double		min;
+};
+
 struct	s_calc
 {
 	t_inter		inter;
@@ -186,6 +192,14 @@ struct	s_rtv
 	t_calc		calc;
 };
 
+typedef struct		s_tdata
+{
+	int				num;
+	t_rtv			rtv;
+	int				x;
+	int				y;
+}t_tdata;
+
 enum	e_obj
 {
 	SPHERE = 0, CONE = 1, CYLINDER = 2, PLANE = 3
@@ -200,6 +214,7 @@ enum	e_light
 **main.c
 */
 int				main(int argc, char **argv);
+int				loop(t_rtv *rtv);
 /*
 **print.c
 */
@@ -219,14 +234,16 @@ t_vector		vect_div(t_vector a, double k);
 void			dir_angls(t_camera *camera);
 t_vector		rotate_cam(t_vector d, t_camera *cam);
 int				rgb_color(t_vector color);
+void			split(t_rtv *rtv);
+void			*trace_thread(void *data);
 /*
 **raytrace.c
 */
-t_raycheck		close_inter(t_vector start, \
-					t_vector dir, double min, t_rtv *rtv);
+t_raycheck		close_inter(t_vector start, t_vector dir, \
+					t_range *range, t_rtv *rtv);
 t_vector		trace_ray(t_rtv *rtv, t_calc *calc);
-void			trace_loop(t_rtv *rtv);
-int				loop(t_rtv *rtv);
+void			*trace_loop(void*data);
+
 /*
 **parser.c
 */

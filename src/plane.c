@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:14:34 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 15:40:46 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 14:19:56 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_roots		inter_plane(t_vector camera, t_vector d, int n, t_rtv *rtv)
 	double c_norm;
 
 	d_dir = vect_dot(d, rtv->map.obj[n].plane.norm);
-	if (d_dir < 0)
+	if (fabs(d_dir) < 0)
 		return ((t_roots){T_MAX + 1, T_MAX + 1});
 	else
 	{

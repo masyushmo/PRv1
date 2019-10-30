@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:17:06 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/29 15:53:03 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 13:00:22 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,21 +39,24 @@ double	calc_light(t_rtv *rtv, t_calc *calc, int spec)
 {
 	int		i;
 	double	inte;
+	t_range lrange;
 
 	i = -1;
 	inte = 0.0;
+	lrange.min = 0.001;
 	while (++i < rtv->map.lnum)
 	{
 		if (rtv->map.light[i].type == AMBIENT)
 			inte += rtv->map.light[i].i;
 		else
 		{
+			lrange.max = (rtv->map.light[i].type == POINT) ? 1 - 0.001 : T_MAX;
 			if (rtv->map.light[i].type == POINT)
 				calc->ld = rtv->map.light[i].vect - calc->point;
-			else
+			else if (rtv->map.light[i].type == DIRECT)
 				calc->ld = rtv->map.light[i].vect;
-			calc->shadow = close_inter(calc->point, calc->ld, 0.001, rtv);
-			if (calc->shadow.close_obj != -1)
+			calc->shadow = close_inter(calc->point, calc->ld, &lrange, rtv);
+			if (calc->shadow.close_obj > -1)
 				continue;
 			inte += add_inte(calc, rtv->map.light[i].i, spec);
 		}
