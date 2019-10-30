@@ -1,0 +1,72 @@
+sphere {
+     position = {20, 0, 50}
+     radius = 10
+     color = {100, 250, 100}
+     specular = 200
+}
+sphere {
+     position = {10, 17, 60}
+     radius = 10
+     color = {100, 100, 250}
+     specular = 200
+}
+sphere {
+     position = {0, 0, 50}
+     radius = 10
+     color = {200, 100, 140}
+     specular = 200
+}
+plane {
+	normal = {0, -1, 0}
+	position = {0, 50, 0}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {0, 1, 0}
+	position = {0, -11, 0}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {0, 0, -1}
+	position = {0, 0, -101}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {0, 0, -1}
+	position = {0, 0, 100}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {1, 0, 0}
+	position = {-50, 0, 0}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {-1, 0, 0}
+	position = {60, 0, 0}
+	color = {100, 100, 100}
+	specular = 100
+}
+light {
+     type = ambient
+     intensity = 0.1
+}
+light {
+     type = point
+     intensity = 0.5
+     position = {70, 10, 81}
+}
+light {
+     type = point
+     intensity = 0.3
+     position = {-20, 10, 30}
+}
+camera {
+     position = {0, 20, -100}
+     direction = {0, 0, 1}
+}

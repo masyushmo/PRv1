@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:24:28 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 18:17:26 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:31:12 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,23 @@ int		new_dir(t_camera *camera)
 
 void	camera_move(t_camera *camera, SDL_Event event, const Uint8 *state)
 {
+	t_vector	temp;
+
+	temp = (t_vector){0, 0, 0};
 	if (event.key.keysym.sym == SDLK_w)
-		camera->pos[2] += MOVE_SPEED;
+		temp[2] += MOVE_SPEED;
 	if (event.key.keysym.sym == SDLK_s)
-		camera->pos[2] -= MOVE_SPEED;
+		temp[2] -= MOVE_SPEED;
 	if (event.key.keysym.sym == SDLK_a)
-		camera->pos[0] -= MOVE_SPEED;
+		temp[0] -= MOVE_SPEED;
 	if (event.key.keysym.sym == SDLK_d)
-		camera->pos[0] += MOVE_SPEED;
+		temp[0] += MOVE_SPEED;
 	if (event.key.keysym.sym == SDLK_SPACE && state[SDL_SCANCODE_TAB])
-		camera->pos[1] -= MOVE_SPEED;
+		temp[1] -= MOVE_SPEED;
 	else if (event.key.keysym.sym == SDLK_SPACE)
-		camera->pos[1] += MOVE_SPEED;
+		temp[1] += MOVE_SPEED;
+	temp = rotate_cam(temp, camera);
+	camera->pos += temp;
 }
 
 void	keyses(t_rtv *rtv)

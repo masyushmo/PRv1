@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/17 16:56:55 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 18:22:22 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:55:24 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,9 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)
 	{
-		if (!read_scene(&rtv.map, argv[1]))
+		printf("%s\n", argv[1]);
+		if ((ft_strncmp("scenes/", argv[1], ft_strlen("scenes/"))) || \
+			!read_scene(&rtv.map, argv[1]))
 			ft_error(BADFILE);
 		if (!init_sdl(&rtv.sdl))
 			return (1);

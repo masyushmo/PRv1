@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 13:07:08 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:46:14 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:56:39 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,6 @@ int			ft_error(char *message)
 
 int			usage(void)
 {
-	ft_putstr("usage: ./rtv {map}\n");
+	ft_putstr("usage: ./rtv scene/{map}\n");
 	return (0);
 }

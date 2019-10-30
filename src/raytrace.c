@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 18:21:57 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:43:39 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,8 @@ void		*trace_thread(void *data)
 
 	too = (t_tdata*)data;
 	calc.camera = too->rtv.map.camera.pos;
-	y = WIN_H / THREAD * too->num;
-	while (y < (WIN_H / THREAD * (too->num + 1)))
+	y = WIN_H / THREADS * too->num;
+	while (y < (WIN_H / THREADS * (too->num + 1)))
 	{
 		x = -1;
 		while (++x < WIN_W)
@@ -103,12 +103,12 @@ void		*trace_thread(void *data)
 
 void		split(t_rtv *rtv)
 {
-	pthread_t	thread[WIN_H];
-	t_tdata		data[WIN_H];
+	pthread_t	thread[THREADS];
+	t_tdata		data[THREADS];
 	int			i;
 
 	i = -1;
-	while (++i < THREAD)
+	while (++i < THREADS)
 	{
 		data[i].num = i;
 		data[i].rtv = *rtv;
@@ -116,7 +116,7 @@ void		split(t_rtv *rtv)
 			trace_thread, data + i);
 	}
 	i = -1;
-	while (++i < THREAD)
+	while (++i < THREADS)
 		pthread_join(thread[i], NULL);
 	SDL_UpdateWindowSurface(rtv->sdl.window);
 }

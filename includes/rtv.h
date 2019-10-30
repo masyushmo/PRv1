@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 18:21:03 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/10/30 18:51:24 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@
 #  include <SDL2/SDL.h>
 # endif
 
-# define THREAD 8
-# define WIN_W 800
-# define WIN_H 600
-# define FOW 60
+# define FOW 120
+# define WIN_W 1280
+# define WIN_H 800
 # define PI 3.14159265
 # define FOW_RAD FOW * PI / 180
 # define T_MIN 0.1
 # define T_MAX 9e9
+# define THREADS 8
 # define OBJ_MAX 50
 # define VEC_SPLT 6
 # define MOVE_SPEED 0.2
 # define ROT_SPEED 0.2
 # define D 0.1
-# define VW	(1.732 * D)
+# define VW	(FOW_RAD * D)
 # define VH	(VW * WIN_H / WIN_W)
 # define BACKROUND (t_vector){0, 0, 0}
 # define R "\033[0;31m"
