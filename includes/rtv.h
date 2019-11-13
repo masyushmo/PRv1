@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/11/13 17:32:18 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:22:09 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,17 +70,18 @@ typedef struct s_raycheck	t_raycheck;
 typedef struct s_camera		t_camera;
 typedef struct s_inter		t_inter;
 typedef struct s_range		t_range;
+typedef struct s_tdata		t_tdata;
 typedef union u_obj			t_obj;
-typedef	double	t_vector __attribute__((vector_size(sizeof(double) * 4)));
-typedef	double	t_roots __attribute__((vector_size(sizeof(double) * 2)));
+typedef	double	t_vector __attribute__((vector_size(sizeof(double)*4)));
+typedef	double	t_roots __attribute__((vector_size(sizeof(double)*2)));
 
-struct	s_sdl
+struct			s_sdl
 {
 	SDL_Window	*window;
 	SDL_Surface	*surface;
 };
 
-struct	s_camera
+struct			s_camera
 {
 	t_vector	pos;
 	t_vector	dir;
@@ -91,7 +92,7 @@ struct	s_camera
 	int			rotate;
 };
 
-struct	s_sphere
+struct			s_sphere
 {
 	int			spec;
 	double		rad;
@@ -99,7 +100,7 @@ struct	s_sphere
 	t_vector	col;
 };
 
-struct	s_plane
+struct			s_plane
 {
 	int			spec;
 	t_vector	o;
@@ -107,7 +108,7 @@ struct	s_plane
 	t_vector	col;
 };
 
-struct	s_cylinder
+struct			s_cylinder
 {
 	int			spec;
 	double		rad;
@@ -116,7 +117,7 @@ struct	s_cylinder
 	t_vector	col;
 };
 
-struct	s_inter
+struct			s_inter
 {
 	t_vector	oc;
 	double		k1;
@@ -125,7 +126,7 @@ struct	s_inter
 	double		dis;
 };
 
-struct	s_cone
+struct			s_cone
 {
 	int			spec;
 	double		ang;
@@ -134,26 +135,26 @@ struct	s_cone
 	t_vector	col;
 };
 
-struct	s_light
+struct			s_light
 {
 	int			type;
 	double		i;
 	t_vector	vect;
 };
 
-struct	s_raycheck
+struct			s_raycheck
 {
 	double		min_dist;
 	int			close_obj;
 };
 
-struct	s_range
+struct			s_range
 {
 	double		max;
 	double		min;
 };
 
-struct	s_calc
+struct			s_calc
 {
 	t_inter		inter;
 	t_raycheck	check;
@@ -166,7 +167,7 @@ struct	s_calc
 	t_vector	lr;
 };
 
-union	u_obj
+union			u_obj
 {
 	t_sphere	sphere;
 	t_cylinder	cylinder;
@@ -175,7 +176,7 @@ union	u_obj
 	t_light		light;
 };
 
-struct	s_map
+struct			s_map
 {
 	int			onum;
 	int			lnum;
@@ -185,7 +186,7 @@ struct	s_map
 	t_camera	camera;
 };
 
-struct	s_rtv
+struct			s_rtv
 {
 	int			quit;
 	t_map		map;
@@ -193,15 +194,15 @@ struct	s_rtv
 	t_calc		calc;
 };
 
-typedef struct		s_tdata
+struct			s_tdata
 {
 	int				num;
 	t_rtv			rtv;
 	int				x;
 	int				y;
-}t_tdata;
+};
 
-enum	e_obj
+enum			e_obj
 {
 	SPHERE = 0, CONE = 1, CYLINDER = 2, PLANE = 3
 };
