@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/28 18:13:47 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/28 19:40:32 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/11/13 16:55:30 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,19 @@ void		dir_angls(t_camera *camera)
 	camera->siny = sin(camera->dir[1] / 180 * M_PI);
 }
 
-t_vector	rotate_cam(t_vector d, t_camera *cam)
+t_vector	rotate_cam(t_camera *cam, t_vector d)
 {
-	double new_x;
-	double new_y;
-	double new_z;
+	double xx;
+	double yy;
+	double zz;
 
-	new_x = d[0] * cam->cosy + d[2] * cam->siny;
-	new_z = -d[0] * cam->siny + d[2] * cam->cosy;
-	d[0] = new_x;
-	d[2] = new_z;
-	new_y = d[1] * cam->cosx + d[2] * cam->sinx;
-	new_z = -d[1] * cam->sinx + d[2] * cam->cosx;
-	d[1] = new_y;
-	d[2] = new_z;
+	xx = d[0];
+	yy = d[1];
+	zz = d[2];
+	d[0] = xx * cam->cosy - zz * cam->siny;
+	d[2] = zz * cam->cosy + xx * cam->siny;
+	zz = d[2];
+	d[1] = yy * cam->cosx - zz * cam->sinx;
+	d[2] = zz * cam->cosx + yy * cam->sinx;
 	return (d);
 }

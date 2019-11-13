@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/04 15:51:51 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 18:51:24 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:32:18 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,9 @@
 # define T_MAX 9e9
 # define THREADS 8
 # define OBJ_MAX 50
+# define LIGHT_MAX 10
 # define VEC_SPLT 6
-# define MOVE_SPEED 0.2
+# define MOVE_SPEED 1
 # define ROT_SPEED 0.2
 # define D 0.1
 # define VW	(FOW_RAD * D)
@@ -232,7 +233,7 @@ t_vector		vect_div(t_vector a, double k);
 **math_v2.c
 */
 void			dir_angls(t_camera *camera);
-t_vector		rotate_cam(t_vector d, t_camera *cam);
+t_vector		rotate_cam(t_camera *cam, t_vector d);
 int				rgb_color(t_vector color);
 void			split(t_rtv *rtv);
 void			*trace_thread(void *data);

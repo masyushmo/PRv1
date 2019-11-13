@@ -1,11 +1,92 @@
-********************************************************************************
-                                                                                
-                                                          :::      ::::::::     
-     6                                                  :+:      :+:    :+:     
-                                                      +:+ +:+         +:+       
-     By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+          
-                                                  +#+#+#+#+#+   +#+             
-     Created: 2019/10/30 18:57:45 by mmasyush          #+#    #+#               
-     Updated: 2019/10/30 18:57:45 by mmasyush         ###   ########.fr         
-                                                                                
-********************************************************************************
+sphere {
+     position = {10, 100, 40}
+     radius = 15
+     color = {200, 250, 100}
+     specular = 200
+}
+sphere {
+     position = {39, 100, 40}
+     radius = 14
+     color = {255, 0, 127}
+     specular = 1000
+}
+cone {
+     position = {10, 17, 60}
+     direction = {1, 1, 0}
+     color = {100, 250, 250}
+     specular = 3
+     angle = 45
+}
+cone {
+     position = {10, 17, 60}
+     direction = {0, 1, 1}
+     color = {100, 100, 250}
+     specular = 1000
+     angle = 30
+}
+sphere {
+     position = {-55, 35, 0}
+     radius = 10
+     color = {100, 250, 100}
+     specular = -1
+}
+cylinder {
+     position = {-60, 30, 50}
+	radius = 5
+	direction = {1, 1, -11}
+	color = {200, 100, 140}
+	specular = 200
+}
+plane {
+	normal = {0, -1, 0}
+	position = {0, 200, 0}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {0, 1, 0}
+	position = {0, -11, 0}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {0, 0, -1}
+	position = {0, 0, -101}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {0, 0, -1}
+	position = {0, 0, 100}
+	color = {100, 100, 100}
+	specular = 100
+}
+plane {
+	normal = {-1, 1, -1}
+	position = {150, 0, 0}
+	color = {100, 200, 100}
+	specular = 100
+}
+light {
+     type = ambient
+     intensity = 0.1
+}
+light {
+     type = direct
+     intensity = 0.5
+     vector = {-1, 0, 0}
+}
+light {
+     type = point
+     intensity = 0.2
+     vector = {10, 17, 65}
+}
+light {
+     type = point
+     intensity = 0.3
+     vector = {-55, 50, 0}
+}
+camera {
+     position = {0, 20, -100}
+     direction = {0, 0, 1}
+}

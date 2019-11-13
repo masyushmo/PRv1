@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:27:37 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 18:43:39 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:07:03 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,10 @@ void		*trace_thread(void *data)
 		x = -1;
 		while (++x < WIN_W)
 		{
-			calc.dir = canvas_to_view(x - WIN_W / 2, y - WIN_H / 2);
-			calc.dir = rotate_cam(calc.dir, &too->rtv.map.camera);
+			calc.dir = rotate_cam(&too->rtv.map.camera,
+				canvas_to_view(x - WIN_W / 2, y - WIN_H / 2));
 			color = trace_ray(&too->rtv, &calc);
-			set_pixel(x, y, \
-				rgb_color(color), too->rtv.sdl.surface);
+			set_pixel(x, y, rgb_color(color), too->rtv.sdl.surface);
 		}
 		y++;
 	}

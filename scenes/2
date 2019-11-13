@@ -1,11 +1,36 @@
-********************************************************************************
-                                                                                
-                                                          :::      ::::::::     
-     2                                                  :+:      :+:    :+:     
-                                                      +:+ +:+         +:+       
-     By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+          
-                                                  +#+#+#+#+#+   +#+             
-     Created: 2019/10/30 18:57:32 by mmasyush          #+#    #+#               
-     Updated: 2019/10/30 18:57:33 by mmasyush         ###   ########.fr         
-                                                                                
-********************************************************************************
+plane {
+	normal = {0, 0, -1}
+	position = {0, 0, 50}
+	color = {102, 5, 102}
+	specular = 10
+}
+plane {
+	normal = {1, 0, 0}
+	position = {-100, 0, 50}
+	color = {0, 153, 152}
+	specular = 500
+}
+sphere {
+	position = {0, 0, 30}
+	radius = 5
+	color = {255, 128, 0}
+	specular = 300
+}
+light {
+	type = direct
+	intensity = 0.1
+	vector = {1, 0, 0}
+}
+light {
+     type = ambient
+     intensity = 0.1
+}
+light {
+     type = point
+     intensity = 0.3
+     vector = {-20, 10, 0}
+}
+camera {
+	position = {0, 0, -20}
+	direction = {20, 20, 0}
+}

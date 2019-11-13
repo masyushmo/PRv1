@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/09/16 18:30:13 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 14:24:42 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/11/13 18:00:30 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		search_all(t_map *map, char *line)
 		save_camera(map, line);
 	else if (obj_b && map->onum < OBJ_MAX)
 		save_obj(map, line, &obj_b);
-	else if (light_b)
+	else if (light_b && map->lnum < LIGHT_MAX)
 		save_light(map, line, &light_b);
 	else
 		return (0);

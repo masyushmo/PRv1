@@ -1,11 +1,40 @@
-********************************************************************************
-                                                                                
-                                                          :::      ::::::::     
-     5                                                  :+:      :+:    :+:     
-                                                      +:+ +:+         +:+       
-     By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+          
-                                                  +#+#+#+#+#+   +#+             
-     Created: 2019/10/30 18:57:42 by mmasyush          #+#    #+#               
-     Updated: 2019/10/30 18:57:42 by mmasyush         ###   ########.fr         
-                                                                                
-********************************************************************************
+sphere {
+	position = {0, 0, 30}
+	radius = 6
+	color = {255, 20, 0}
+	specular = 300
+}
+light {
+     type = point
+     intensity = 0.2
+     vector = {0, 0, 0}
+}
+light {
+     type = point
+     intensity = 0.1
+     vector = {-20, 0, 0}
+}
+light {
+     type = point
+     intensity = 0.1
+     vector = {40, 0, 0}
+}
+light {
+     type = point
+     intensity = 0.1
+     vector = {0, 30, 0}
+}
+light {
+     type = point
+     intensity = 0.1
+     vector = {0, -10, 0}
+}
+light {
+     type = point
+     intensity = 0.1
+     vector = {20, 20, 30}
+}
+camera {
+	position = {0, 0, 0}
+	direction = {0, 0, 0}
+}

@@ -1,11 +1,41 @@
-********************************************************************************
-                                                                                
-                                                          :::      ::::::::     
-     4                                                  :+:      :+:    :+:     
-                                                      +:+ +:+         +:+       
-     By: mmasyush <mmasyush@student.unit.ua>        +#+  +:+       +#+          
-                                                  +#+#+#+#+#+   +#+             
-     Created: 2019/10/30 18:57:38 by mmasyush          #+#    #+#               
-     Updated: 2019/10/30 18:57:39 by mmasyush         ###   ########.fr         
-                                                                                
-********************************************************************************
+cylinder {
+     position = {0, 0, 20}
+     direction = {0, 1, 0}
+     color = {10, 250, 50}
+     specular = 10
+     radius = 4
+}
+cylinder {
+     position = {0, 0, 20}
+     direction = {1, 0, 0}
+     color = {10, 250, 255}
+     specular = 1000
+     radius = 3
+}
+cylinder {
+     position = {0, 0, 20}
+     direction = {-1, 1, 0}
+     color = {255, 0, 255}
+     specular = 1000
+     radius = 1
+}
+cylinder {
+     position = {0, 0, 20}
+     direction = {1, 1, 1}
+     color = {255, 200, 5}
+     specular = 1000
+     radius = 2
+}
+light {
+     type = ambient
+     intensity = 0.1
+}
+light {
+     type = point
+     intensity = 0.3
+     vector = {-20, 0, 0}
+}
+camera {
+	position = {0, 0, 0}
+	direction = {0, 1, 0}
+}

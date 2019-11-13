@@ -6,7 +6,7 @@
 /*   By: mmasyush <mmasyush@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/10/23 15:17:06 by mmasyush          #+#    #+#             */
-/*   Updated: 2019/10/30 13:00:22 by mmasyush         ###   ########.fr       */
+/*   Updated: 2019/11/13 17:51:20 by mmasyush         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ double	calc_light(t_rtv *rtv, t_calc *calc, int spec)
 	i = -1;
 	inte = 0.0;
 	lrange.min = 0.001;
-	while (++i < rtv->map.lnum)
+	while (++i < rtv->map.lnum && inte < 1)
 	{
 		if (rtv->map.light[i].type == AMBIENT)
 			inte += rtv->map.light[i].i;
@@ -61,7 +61,7 @@ double	calc_light(t_rtv *rtv, t_calc *calc, int spec)
 			inte += add_inte(calc, rtv->map.light[i].i, spec);
 		}
 	}
-	return (inte);
+	return (CLAMP(inte, 0, 1));
 }
 
 int		save_light(t_map *map, char *line, int *close)
@@ -83,8 +83,7 @@ int		save_light(t_map *map, char *line, int *close)
 	else if (ft_strncmp("intensity = ", l, ft_strlen("intensity = ")) == 0)
 		map->light[map->lnum].i = get_double(l, \
 		(int)ft_strlen("intensity = "), (int)ft_strlen(l));
-	else if ((ft_strncmp("direction = ", l, ft_strlen("direction = ")) == 0) ||
-		(ft_strncmp("position = ", l, ft_strlen("position = ")) == 0))
+	else if (ft_strncmp("vector = ", l, ft_strlen("vector = ")) == 0)
 		map->light[map->lnum].vect = get_vect(l);
 	else
 		ft_error(BADLINE);

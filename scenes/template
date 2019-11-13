@@ -31,12 +31,12 @@ light {
 light {
      type = point
      intensity = x
-     position = {x, x, x}
+     vector = {x, x, x}
 }
 light {
      type = direct
      intensity = x
-     direction = {x, x, x}
+     vector = {x, x, x}
 }
 camera {
      position = {x, x, x}
